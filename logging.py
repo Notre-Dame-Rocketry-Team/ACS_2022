@@ -16,9 +16,9 @@ def newCSV(filepath,headers):
         # write a row to the csv file
         writer.writerow(headers)
 
-#adds a row of data to a given CSV file
-#input: filepath to new CSV file, row of data as a python list
-#output: n/a
+# adds a row of data to a given CSV file
+# input: filepath to new CSV file, row of data as a python list
+# output: n/a
 def addRow(filepath,row):
     
     # open file
