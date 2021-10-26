@@ -12,7 +12,6 @@ def newCSV(filepath,headers):
     with open(filepath, 'w') as f:
         # create the csv writer
         writer = csv.writer(f)
-
         # write a row to the csv file
         writer.writerow(headers)
 
@@ -20,12 +19,9 @@ def newCSV(filepath,headers):
 # input: filepath to new CSV file, row of data as a python list
 # output: n/a
 def addRow(filepath,row):
-    
     # open file
     with open(filepath, 'w') as f:
-    
         # create the csv writer
         writer = csv.writer(f)
-
         # write a row to the csv file
         writer.writerow(headers)
