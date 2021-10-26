@@ -8,10 +8,8 @@ import csv
 # input: filepath to new CSV file, list of headers as a python list
 # returns: n/a
 def newCSV(filepath,headers):
-    
     # open file
     with open(filepath, 'w') as f:
-  
         # create the csv writer
         writer = csv.writer(f)
 
