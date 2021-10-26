@@ -1,5 +1,5 @@
 # NDRT 2021-2022
-# ACS subteam
+# Hector Juarez ACS subteam
 # This code contains functions to create CSV files and add data to them 
 
 import csv
