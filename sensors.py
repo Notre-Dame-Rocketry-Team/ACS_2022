@@ -61,6 +61,4 @@ def read_altimeter(altimeter):
     Pressure = altimeter.pressure
     Altitude = altimeter.altitude
     Temperature = altimeter.temperature
-
     return Pressure, Altitude, Temperature
-
