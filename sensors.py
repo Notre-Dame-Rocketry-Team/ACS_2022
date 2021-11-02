@@ -1,5 +1,6 @@
 import board
 import adafruit_icm20x
+import adafruit_mpl3115a2
 import analogio
 
 def init_imu():
@@ -49,3 +50,17 @@ def read_accelerometer(valtuple):
     acc_y = new_tuple[1] #units: g
     acc_z = new_tuple[2] #units: g
     return acc_x, acc_y, acc_z
+
+def init_altimeter():
+    i2c = board.I2C()
+    altimeter = adafruit_mpl3115a2.MPL3115A2(i2c)
+    altimeter_outputs = ["Pressure","Altitude","Temperature"]
+    return altimeter, altimeter_outputs
+
+def read_altimeter(altimeter):
+    Pressure = altimeter.pressure
+    Altitude = altimeter.altitude
+    Temperature = altimeter.temperature
+
+    return Pressure, Altitude, Temperature
+
