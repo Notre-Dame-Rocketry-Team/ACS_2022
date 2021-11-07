@@ -20,3 +20,10 @@ Team (NDRT) Apogee Control System (ACS).
 * Log sensor readings
 * Detect launch/burnout/apogee
 * Actuate servo motor
+
+## Connecting to Pi
+
+1. Connect to `ND-guest`
+2. Open a terminal
+3. Type `ssh pi@strawberry`
+4. Enter password `ACS_2022`

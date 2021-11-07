@@ -15,38 +15,23 @@ READ_FUNCTIONS = [sensors.read_imu,
                   sensors.read_accelerometer,
                   sensors.read_altimeter]
 
+
 def find_new_name():
-    './data/data_0.csv'
-    './data/data_1.csv'
-    './data/data_2.csv'
-    './data/data_3.csv'
-    './data/data_4.csv'
-    './data/data_5.csv'
-    './data/data_6.csv'
-    './data/data_7.csv'
-    './data/data_8.csv'
-    './data/data_9.csv'
-    './data/data_10.csv'
     # Step 1: search for file names using glob
     files = glob.glob(SAVE_PATH + SAVE_NAME + "_*" + SAVE_SUFFIX)
 
     # Step 2: if there are any file names, find the biggest number
-    numbers= []
+    numbers = []
 
     for x in files: 
-        y=x.replace(SAVE_PATH + SAVE_NAME + "_", "").replace(SAVE_SUFFIX, "")
-        int(y)
-        y=int(y)
-        numbers.append(y)
-    z=max(numbers)
-    a=(SAVE_PATH + SAVE_NAME + "_"+z + SAVE_SUFFIX)
-    return a
-        
-    
-    # Step 3: find new file name
-    import glob
-        glob.glob('./data/data_(*-1).csv')
-        return: max
+        numbers.append(int(x.replace(SAVE_PATH + SAVE_NAME + "_", "").replace(SAVE_SUFFIX, "")))
+
+    z = max(numbers)
+
+    # Step 3: Return the output file name
+    fname = SAVE_PATH + SAVE_NAME + '_' + str(z) + SAVE_SUFFIX
+
+    return fname
 
 
 def initialize_sensors():
@@ -88,14 +73,17 @@ def read_sensors(sensors):
 
 if __name__ == '__main__':
     # Initialize sensors
-    initialize_sensors()
+    sensors, labels = initialize_sensors()
+
+    # Get the filename
+    save_fname = find_new_name()
 
     # Initialize CSV
-    logging.initialize_csv()
+    logging.newCSV(save_fname, labels)
 
     while True:
         # Read sensors
-        read_sensors()
+        data = read_sensors(sensors)
         
         # Write to CSV
-        logging.write_csv()
+        logging.addRow(data)

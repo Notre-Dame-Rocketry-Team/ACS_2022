@@ -3,6 +3,7 @@ import adafruit_icm20x
 import adafruit_mpl3115a2
 import analogio
 
+# IMU
 def init_imu():
     i2c_imu = board.I2C()  # uses board.SCL and board.SDA
     imu = adafruit_icm20x.ICM20948(i2c_imu)
@@ -24,7 +25,7 @@ def read_imu(imu):
 
     return Acceleration_X, Acceleration_Y, Acceleration_Z, Gyro_X, Gyro_Y, Gyro_Z, Magnetometer_X, Magnetometer_Y, Magnetometer_Z
 
-
+# Accelerometer
 def init_accelerometer():
     x_axis = analogio.AnalogIn(board.A1)
     y_axis = analogio.AnalogIn(board.A2)
@@ -51,6 +52,7 @@ def read_accelerometer(valtuple):
     acc_z = new_tuple[2] #units: g
     return acc_x, acc_y, acc_z
 
+# Altimeter
 def init_altimeter():
     i2c = board.I2C()
     altimeter = adafruit_mpl3115a2.MPL3115A2(i2c)
