@@ -8,6 +8,13 @@ SAVE_PATH = './data/'
 SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
 
+INIT_FUNCTIONS = [sensors.initialize_imu,
+                  sensors.initialize_accelerometer,
+                  sensors.initialize_altimeter]
+READ_FUNCTIONS = [sensors.read_imu,
+                  sensors.read_accelerometer,
+                  sensors.read_altimeter]
+
 def find_new_name():
     './data/data_0.csv'
     './data/data_1.csv'
@@ -41,11 +48,42 @@ def find_new_name():
         glob.glob('./data/data_(*-1).csv')
         return: max
 
-def initialize_sensors():
-    pass
 
-def read_sensors():
-    pass
+def initialize_sensors():
+    """
+    This function calls all of the functions specified in
+    INIT_FUNCTIONS to initialize all of the sensors.
+    The output from a function in INIT_FUNCTIONS should
+    be of the following form:
+
+    Outputs: objects - list of sensor objects
+             labels - list of string labels for sensors
+    """
+
+    # Run all the functions
+    out = [f() for f in INIT_FUNCTIONS]
+
+    # Break it apart
+    objects, labels = list(zip(*out))
+
+    return objects, labels
+
+
+def read_sensors(sensors):
+    """
+    This function calls all of the functions specified in
+    READ_FUNCTIONS to read data from all sensors.
+    The output should be a list of all of the sensor data,
+    in the order of the label output from `initialize_sensors`
+
+    Inputs: sensors - list of sensor objects
+    Outputs: data - list of floats with sensor data
+    """
+
+    # Run all the functions
+    data = [f(obj) for f, obj in zip(READ_FUNCTIONS, sensors)]
+
+    return data
 
 
 if __name__ == '__main__':
