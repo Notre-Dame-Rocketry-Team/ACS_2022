@@ -2,6 +2,8 @@ import board
 import adafruit_icm20x
 import adafruit_mpl3115a2
 import analogio
+import sys
+from DFRobot_LIS import *
 
 # IMU
 def init_imu():
@@ -27,6 +29,8 @@ def read_imu(imu):
 
 # Accelerometer
 def init_accelerometer():
+    '''
+    old code
     x_axis = analogio.AnalogIn(board.A1)
     y_axis = analogio.AnalogIn(board.A2)
     z_axis = analogio.AnalogIn(board.A3)
@@ -36,8 +40,28 @@ def init_accelerometer():
     z_name = "Acceleometer Z acceleration:"
     nametuple = (x_name, y_name, z_name)
     return valtuple, nametuple
+    '''
+    I2C_BUS         = board.I2C()
+    ADDRESS_1       = 0x19                   #Sensor address
+    acce = DFRobot_H3LIS200DL_I2C(I2C_BUS ,ADDRESS_1)   #accelerometer object
+    
+    #Chip initialization
+    acce.begin()
+    acce.set_range(acce.H3LIS200DL_100G)
+    acce.set_acquire_rate(acce.NORMAL_400HZ)
+    
+    x_name = "Acceleometer X acceleration:"
+    y_name = "Acceleometer Y acceleration:"
+    z_name = "Acceleometer Z acceleration:"
+    nametuple = (x_name, y_name, z_name)
+    return acce, nametuple
 
-def read_accelerometer(valtuple):
+    
+    
+def read_accelerometer(accee):
+    
+    '''
+    Old Code
     new_tuple = ()
     for val in valtuple: 
          # Convert axis value to float within 0...1 range.
@@ -51,6 +75,14 @@ def read_accelerometer(valtuple):
     acc_y = new_tuple[1] #units: g
     acc_z = new_tuple[2] #units: g
     return acc_x, acc_y, acc_z
+    '''
+    x,y,z = acce.read_acce_xyz()
+    
+    for val in x,y,z:
+    #TODO clean the readings to desired
+    
+    
+    return x,y,z
 
 # Altimeter
 def init_altimeter():
