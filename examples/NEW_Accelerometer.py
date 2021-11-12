@@ -13,7 +13,8 @@ hjuarez2@nd.edu
 """
 
 import sys
-sys.path.append("../../..") # set system path to top
+LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
+sys.path.append(LIS_PATH)
 
 from DFRobot_LIS import *
 import time

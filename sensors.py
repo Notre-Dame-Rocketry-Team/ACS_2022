@@ -1,17 +1,40 @@
 import board
 import adafruit_icm20x
-import adafruit_mpl3115a2
-import analogio
+import adafruit_bmp3xx
 import sys
-from DFRobot_LIS import *
+import time
+
+# Add DFRobot_LIS import
+LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
+sys.path.append(LIS_PATH)
+
+import DFRobot_LIS
+
+# Constants
+TIME_LABEL = ['Time']
+ICM_LABELS = ['ICM Acceleration X', 'ICM Acceleration Y', 'ICM Acceleration Z',
+              'ICM Gyroscope X',    'ICM Gyroscope Y',    'ICM Gyroscope Z',
+              'ICM Magnetometer X', 'ICM Magnetometer Y', 'ICM Magnetometer Z']
+LIS_LABELS = ['LIS Acceleration X', 'LIS Acceleration Y', 'LIS Acceleration Z']
+BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
+
+
+# Timer
+def init_time():
+    return None, TIME_LABEL
+
+
+def read_time(_):
+    return [time.time()]
+
 
 # IMU
 def init_imu():
     i2c_imu = board.I2C()  # uses board.SCL and board.SDA
     imu = adafruit_icm20x.ICM20948(i2c_imu)
-    imu_outputs = ["Acceleration_X", "Acceleration_Y", "Acceleration_Z", "Gyro_X","Gyro_Y","Gyro_Z","Magnetometer_X","Magnetometer_Y","Magnetometer_Z"]
 
-    return imu, imu_outputs
+    return imu, ICM_LABELS
+
 
 def read_imu(imu):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
@@ -27,6 +50,7 @@ def read_imu(imu):
 
     return Acceleration_X, Acceleration_Y, Acceleration_Z, Gyro_X, Gyro_Y, Gyro_Z, Magnetometer_X, Magnetometer_Y, Magnetometer_Z
 
+
 # Accelerometer
 def init_accelerometer():
     '''
@@ -41,29 +65,24 @@ def init_accelerometer():
     nametuple = (x_name, y_name, z_name)
     return valtuple, nametuple
     '''
-    I2C_BUS         = board.I2C()
+    # I2C_BUS         = board.I2C()
+    I2C_BUS         = 0x01
     ADDRESS_1       = 0x19                   #Sensor address
-    acce = DFRobot_H3LIS200DL_I2C(I2C_BUS ,ADDRESS_1)   #accelerometer object
-    
+    acce = DFRobot_LIS.DFRobot_H3LIS200DL_I2C(I2C_BUS, ADDRESS_1)   #accelerometer object
+
     #Chip initialization
     acce.begin()
     acce.set_range(acce.H3LIS200DL_100G)
     acce.set_acquire_rate(acce.NORMAL_400HZ)
-    
-    x_name = "Acceleometer X acceleration:"
-    y_name = "Acceleometer Y acceleration:"
-    z_name = "Acceleometer Z acceleration:"
-    nametuple = (x_name, y_name, z_name)
-    return acce, nametuple
 
-    
-    
-def read_accelerometer(accee):
-    
+    return acce, LIS_LABELS
+
+
+def read_accelerometer(accel):
     '''
     Old Code
     new_tuple = ()
-    for val in valtuple: 
+    for val in valtuple:
          # Convert axis value to float within 0...1 range.
         new_value = val / 65535
         # Shift values to true center (0.5).
@@ -76,23 +95,31 @@ def read_accelerometer(accee):
     acc_z = new_tuple[2] #units: g
     return acc_x, acc_y, acc_z
     '''
-    x,y,z = acce.read_acce_xyz()
-    
-    for val in x,y,z:
-    #TODO clean the readings to desired
-    
-    
+    x,y,z = accel.read_acce_xyz()
+
     return x,y,z
+
 
 # Altimeter
 def init_altimeter():
+    # Initialize Altimeter Object
     i2c = board.I2C()
-    altimeter = adafruit_mpl3115a2.MPL3115A2(i2c)
-    altimeter_outputs = ["Pressure","Altitude","Temperature"]
-    return altimeter, altimeter_outputs
+    altimeter = adafruit_bmp3xx.BMP3XX_I2C(i2c)
+
+    # Zero out altimeter
+    N = 100
+    sea_sum = 0
+    for _ in range(N):
+        sea_sum += altimeter.pressure
+        time.sleep(0.01)
+    altimeter.sea_level_pressure = sea_sum / N
+
+    return altimeter, BMP_LABELS
+
 
 def read_altimeter(altimeter):
     Pressure = altimeter.pressure
     Altitude = altimeter.altitude
     Temperature = altimeter.temperature
+
     return Pressure, Altitude, Temperature

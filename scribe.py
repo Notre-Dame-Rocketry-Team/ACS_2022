@@ -15,7 +15,7 @@ import csv
 # returns: n/a
 def newCSV(filepath, headers):
     # open file in write mode
-    with open(filepath, 'w') as f:
+    with open(filepath, 'w', newline='') as f:
         # create the csv writer
         writer = csv.writer(f)
 
@@ -27,9 +27,9 @@ def newCSV(filepath, headers):
 # output: n/a
 def addRow(filepath, row):
     # open file in write mode
-    with open(filepath, 'w') as f:
+    with open(filepath, 'a', newline='') as f:
         # create the csv writer
         writer = csv.writer(f)
 
         # write a row to the csv file
-        writer.writerow(headers)
+        writer.writerow(row)

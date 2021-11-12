@@ -1,6 +1,7 @@
 # Import libraries
 import sensors
-import logging
+import utils
+import scribe
 import glob
 
 # Constants
@@ -8,10 +9,12 @@ SAVE_PATH = './data/'
 SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
 
-INIT_FUNCTIONS = [sensors.initialize_imu,
-                  sensors.initialize_accelerometer,
-                  sensors.initialize_altimeter]
-READ_FUNCTIONS = [sensors.read_imu,
+INIT_FUNCTIONS = [sensors.init_time,
+                  sensors.init_imu,
+                  sensors.init_accelerometer,
+                  sensors.init_altimeter]
+READ_FUNCTIONS = [sensors.read_time,
+                  sensors.read_imu,
                   sensors.read_accelerometer,
                   sensors.read_altimeter]
 
@@ -26,7 +29,7 @@ def find_new_name():
     for x in files: 
         numbers.append(int(x.replace(SAVE_PATH + SAVE_NAME + "_", "").replace(SAVE_SUFFIX, "")))
 
-    z = max(numbers)
+    z = 1 + max(numbers) if len(numbers) > 0 else 0
 
     # Step 3: Return the output file name
     fname = SAVE_PATH + SAVE_NAME + '_' + str(z) + SAVE_SUFFIX
@@ -49,7 +52,8 @@ def initialize_sensors():
     out = [f() for f in INIT_FUNCTIONS]
 
     # Break it apart
-    objects, labels = list(zip(*out))
+    objects, labels = utils.unzip_list(out)
+    labels = utils.unroll_list(labels)
 
     return objects, labels
 
@@ -67,6 +71,7 @@ def read_sensors(sensors):
 
     # Run all the functions
     data = [f(obj) for f, obj in zip(READ_FUNCTIONS, sensors)]
+    data = utils.unroll_list(data)
 
     return data
 
@@ -79,11 +84,11 @@ if __name__ == '__main__':
     save_fname = find_new_name()
 
     # Initialize CSV
-    logging.newCSV(save_fname, labels)
+    scribe.newCSV(save_fname, labels)
 
     while True:
         # Read sensors
         data = read_sensors(sensors)
         
         # Write to CSV
-        logging.addRow(data)
+        scribe.addRow(save_fname, data)
