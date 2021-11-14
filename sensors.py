@@ -5,8 +5,8 @@ import sys
 import time
 
 # Add DFRobot_LIS import
-LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
-sys.path.append(LIS_PATH)
+# LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
+# sys.path.append(LIS_PATH)
 
 import DFRobot_LIS
 
@@ -17,6 +17,7 @@ ICM_LABELS = ['ICM Acceleration X', 'ICM Acceleration Y', 'ICM Acceleration Z',
               'ICM Magnetometer X', 'ICM Magnetometer Y', 'ICM Magnetometer Z']
 LIS_LABELS = ['LIS Acceleration X', 'LIS Acceleration Y', 'LIS Acceleration Z']
 BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
+g = 9.80665
 
 
 # Timer
@@ -38,17 +39,24 @@ def init_imu():
 
 def read_imu(imu):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
-    Acceleration_X = imu.acceleration[0] #Unit: m/s^2
-    Acceleration_Y = imu.acceleration[1] #Unit: m/s^2
-    Acceleration_Z = imu.acceleration[2] #Unit: m/s^2
-    Gyro_X = imu.gyro[0] #Unit: rad/s
-    Gyro_Y = imu.gyro[1] #Unit: rad/s
-    Gyro_Z = imu.gyro[2] #Unit: rad/s
-    Magnetometer_X = imu.magnetic[0] #Unit: µT
-    Magnetometer_Y = imu.magnetic[1] #Unit: µT
-    Magnetometer_Z = imu.magnetic[2] #Unit: µT
+    t1 = time.time()
+    accel = imu.acceleration
+    gyro = imu.gyro
+    magn = imu.magnetic
+    # Acceleration_X = imu.acceleration[0] #Unit: m/s^2
+    # Acceleration_Y = imu.acceleration[1] #Unit: m/s^2
+    # Acceleration_Z = imu.acceleration[2] #Unit: m/s^2
+    # Gyro_X = imu.gyro[0] #Unit: rad/s
+    # Gyro_Y = imu.gyro[1] #Unit: rad/s
+    # Gyro_Z = imu.gyro[2] #Unit: rad/s
+    # Magnetometer_X = imu.magnetic[0] #Unit: µT
+    # Magnetometer_Y = imu.magnetic[1] #Unit: µT
+    # Magnetometer_Z = imu.magnetic[2] #Unit: µT
+    t2 = time.time()
+    print(f'IMU: {t2-t1}')
 
-    return Acceleration_X, Acceleration_Y, Acceleration_Z, Gyro_X, Gyro_Y, Gyro_Z, Magnetometer_X, Magnetometer_Y, Magnetometer_Z
+    # return Acceleration_X, Acceleration_Y, Acceleration_Z, Gyro_X, Gyro_Y, Gyro_Z, Magnetometer_X, Magnetometer_Y, Magnetometer_Z
+    return accel + gyro + magn
 
 
 # Accelerometer
@@ -73,7 +81,9 @@ def init_accelerometer():
     #Chip initialization
     acce.begin()
     acce.set_range(acce.H3LIS200DL_100G)
+    #acce.set_range(acce.LIS331HH_6G)
     acce.set_acquire_rate(acce.NORMAL_400HZ)
+    acce.set_filter_mode(acce.SHUTDOWN)
 
     return acce, LIS_LABELS
 
@@ -95,9 +105,13 @@ def read_accelerometer(accel):
     acc_z = new_tuple[2] #units: g
     return acc_x, acc_y, acc_z
     '''
-    x,y,z = accel.read_acce_xyz()
+    t1 = time.time()
+    accel_vals = accel.read_acce_xyz()
+    accel_vals = [i * g for i in accel_vals]
+    t2 = time.time()
+    print(f'Accelerometer: {t2 - t1}')
 
-    return x,y,z
+    return accel_vals
 
 
 # Altimeter
@@ -118,8 +132,11 @@ def init_altimeter():
 
 
 def read_altimeter(altimeter):
+    t1 = time.time()
     Pressure = altimeter.pressure
     Altitude = altimeter.altitude
     Temperature = altimeter.temperature
+    t2 = time.time()
+    print(f'Altimeter: {t2 - t1}')
 
     return Pressure, Altitude, Temperature
