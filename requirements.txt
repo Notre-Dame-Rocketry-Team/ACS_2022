@@ -1,2 +1,0 @@
-adafruit-circuitpython-bmp3xx
-adafruit-circuitpython-icm20x
