@@ -33,6 +33,16 @@ def read_time(_):
 def init_imu():
     i2c_imu = board.I2C()  # uses board.SCL and board.SDA
     imu = adafruit_icm20x.ICM20948(i2c_imu)
+    imu.accelerometer_range = adafruit_icm20x.AccelRange.RANGE_16G
+    imu.MagDataRate = 'RATE_100HZ'
+    imu.accelerometer_data_rate = 1125
+    imu.gyro_data_rate = 1100
+    imu.mag_data_rate = 1125
+    imu.accel_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.FREQ_473HZ_3DB
+    imu.gyro_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
+    imu.mag_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
+    # imu.gyro_data_rate_divisor = 200
+    # imu.mag_data_rate_divisor = 100
 
     return imu, ICM_LABELS
 
@@ -119,6 +129,9 @@ def init_altimeter():
     # Initialize Altimeter Object
     i2c = board.I2C()
     altimeter = adafruit_bmp3xx.BMP3XX_I2C(i2c)
+    altimeter.pressure_oversampling = 1
+    altimeter.temperature_oversampling = 1
+    altimeter.filter_coefficient = 0
 
     # Zero out altimeter
     N = 100

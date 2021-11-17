@@ -57,6 +57,7 @@ _REGISTER_CMD = const(0x7E)
 
 _OSR_SETTINGS = (1, 2, 4, 8, 16, 32)  # pressure and temperature oversampling settings
 _IIR_SETTINGS = (0, 2, 4, 8, 16, 32, 64, 128)  # IIR filter coefficients
+_ODR_SETTINGS = (1, 2, 4, 8, 16, 32)
 
 
 class BMP3XX:
@@ -69,7 +70,7 @@ class BMP3XX:
         self._read_coefficients()
         self.reset()
         self.sea_level_pressure = 1013.25
-        self._wait_time = 0.002  # change this value to have faster reads if needed
+        self._wait_time = 0.000001  # change this value to have faster reads if needed
         """Sea level pressure in hPa."""
 
     @property
@@ -87,6 +88,11 @@ class BMP3XX:
         """The altitude in meters based on the currently set sea level pressure."""
         # see https://www.weather.gov/media/epz/wxcalc/pressureAltitude.pdf
         return 44307.7 * (1 - (self.pressure / self.sea_level_pressure) ** 0.190284)
+
+    # @property
+    # def sampling_frequency(self):
+    #     return _ODR_SETTINGS[self._read_byte(_REGISTER_ODR) & 0x07]
+
 
     @property
     def pressure_oversampling(self):

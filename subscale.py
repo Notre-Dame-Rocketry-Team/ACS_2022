@@ -3,6 +3,7 @@ import sensors
 import utils
 import scribe
 import glob
+import time
 
 # Constants
 SAVE_PATH = './data/'
@@ -87,8 +88,16 @@ if __name__ == '__main__':
     scribe.newCSV(save_fname, labels)
 
     while True:
+        print('--- Beginning Cycle ---')
         # Read sensors
+        t1 = time.time()
         data = read_sensors(sensors)
+        t2 = time.time()
+        print(f'Total Sensor Read Time: {t2 - t1}')
         
         # Write to CSV
+        t1 = time.time()
         scribe.addRow(save_fname, data)
+        t2 = time.time()
+        print(f'Data Write Time: {t2 - t1}')
+        print()
