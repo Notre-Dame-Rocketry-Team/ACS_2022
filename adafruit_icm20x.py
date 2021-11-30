@@ -242,32 +242,32 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
         """Resets the internal registers and restores the default settings"""
         self._bank = 0
 
-        sleep(0.005)
+        sleep(0.00005)
         self._reset = True
-        sleep(0.005)
+        sleep(0.00005)
         while self._reset:
-            sleep(0.005)
+            sleep(0.00005)
 
     @property
     def _sleep(self):
         self._bank = 0
-        sleep(0.005)
+        sleep(0.00005)
         self._sleep_reg = False
-        sleep(0.005)
+        sleep(0.00005)
 
     @_sleep.setter
     def _sleep(self, sleep_enabled):
         self._bank = 0
-        sleep(0.005)
+        sleep(0.00005)
         self._sleep_reg = sleep_enabled
-        sleep(0.005)
+        sleep(0.00005)
 
     @property
     def acceleration(self):
         """The x, y, z acceleration values returned in a 3-tuple and are in :math:`m / s ^ 2.`"""
         self._bank = 0
         raw_accel_data = self._raw_accel_data
-        sleep(0.005)
+        sleep(0.0005)
 
         x = self._scale_xl_data(raw_accel_data[0])
         y = self._scale_xl_data(raw_accel_data[1])
@@ -288,7 +288,7 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
         return (x, y, z)
 
     def _scale_xl_data(self, raw_measurement):
-        sleep(0.005)
+        sleep(0.00005)
         return raw_measurement / AccelRange.lsb[self._cached_accel_range] * G_TO_ACCEL
 
     def _scale_gyro_data(self, raw_measurement):
@@ -307,9 +307,9 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
         if not AccelRange.is_valid(value):
             raise AttributeError("range must be an `AccelRange`")
         self._bank = 2
-        sleep(0.005)
+        sleep(0.00005)
         self._accel_range = value
-        sleep(0.005)
+        sleep(0.00005)
         self._cached_accel_range = value
         self._bank = 0
 
@@ -325,9 +325,9 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
             raise AttributeError("range must be a `GyroRange`")
 
         self._bank = 2
-        sleep(0.005)
+        sleep(0.00005)
         self._gyro_range = value
-        sleep(0.005)
+        sleep(0.00005)
         self._cached_gyro_range = value
         self._bank = 0
         sleep(0.100)  # needed to let new range settle
@@ -350,7 +350,7 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
         """
         self._bank = 2
         raw_rate_divisor = self._accel_rate_divisor
-        sleep(0.005)
+        sleep(0.00005)
         self._bank = 0
         # rate_hz = 1125/(1+raw_rate_divisor)
         return raw_rate_divisor
@@ -359,9 +359,9 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
     def accelerometer_data_rate_divisor(self, value):
         # check that value <= 4095
         self._bank = 2
-        sleep(0.005)
+        sleep(0.00005)
         self._accel_rate_divisor = value
-        sleep(0.005)
+        sleep(0.00005)
 
     @property
     def gyro_data_rate_divisor(self):
@@ -381,7 +381,7 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
 
         self._bank = 2
         raw_rate_divisor = self._gyro_rate_divisor
-        sleep(0.005)
+        sleep(0.00005)
         self._bank = 0
         # rate_hz = 1100/(1+raw_rate_divisor)
         return raw_rate_divisor
@@ -390,9 +390,9 @@ class ICM20X:  # pylint:disable=too-many-instance-attributes
     def gyro_data_rate_divisor(self, value):
         # check that value <= 255
         self._bank = 2
-        sleep(0.005)
+        sleep(0.00005)
         self._gyro_rate_divisor = value
-        sleep(0.005)
+        sleep(0.00005)
 
     def _accel_rate_calc(self, divisor):  # pylint:disable=no-self-use
         return 1125 / (1 + divisor)
@@ -703,7 +703,7 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
         self._bank = 0
         sleep(0.100)
         self._bypass_i2c_master = False
-        sleep(0.005)
+        sleep(0.00005)
 
         # no repeated start, i2c microcontroller clock = 345.60kHz
         self._bank = 3
@@ -733,11 +733,11 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
     def _setup_mag_readout(self):
         self._bank = 3
         self._slave0_addr = 0x8C
-        sleep(0.005)
+        sleep(0.00005)
         self._slave0_reg = 0x11
-        sleep(0.005)
+        sleep(0.00005)
         self._slave0_ctrl = 0x89  # enable
-        sleep(0.005)
+        sleep(0.00005)
 
     def _mag_id(self):
         return self._read_mag_register(0x01)
@@ -748,7 +748,7 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
 
         self._bank = 0
         full_data = self._raw_mag_data
-        sleep(0.005)
+        sleep(0.00005)
 
         x = full_data[0] * _ICM20X_UT_PER_LSB
         y = full_data[1] * _ICM20X_UT_PER_LSB
@@ -783,13 +783,13 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
         slave_addr |= 0x80  # set top bit for read
 
         self._slave4_addr = slave_addr
-        sleep(0.005)
+        sleep(0.0005)
         self._slave4_reg = register_addr
-        sleep(0.005)
+        sleep(0.0005)
         self._slave4_ctrl = (
             0x80  # enable, don't raise interrupt, write register value, no delay
         )
-        sleep(0.005)
+        sleep(0.0005)
         self._bank = 0
 
         finished = False
@@ -797,29 +797,29 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
             finished = self._slave_finished
             if finished:  # bueno! :)
                 break
-            sleep(0.010)
+            sleep(0.0005)
 
         if not finished:
             return None
 
         self._bank = 3
         mag_register_data = self._slave4_di
-        sleep(0.005)
+        sleep(0.0005)
         return mag_register_data
 
     def _write_mag_register(self, register_addr, value, slave_addr=0x0C):
         self._bank = 3
 
         self._slave4_addr = slave_addr
-        sleep(0.005)
+        sleep(0.0005)
         self._slave4_reg = register_addr
-        sleep(0.005)
+        sleep(0.0005)
         self._slave4_do = value
-        sleep(0.005)
+        sleep(0.0005)
         self._slave4_ctrl = (
             0x80  # enable, don't raise interrupt, write register value, no delay
         )
-        sleep(0.005)
+        sleep(0.0005)
         self._bank = 0
 
         finished = False
@@ -827,6 +827,6 @@ class ICM20948(ICM20X):  # pylint:disable=too-many-instance-attributes
             finished = self._slave_finished
             if finished:  # bueno! :)
                 break
-            sleep(0.010)
+            sleep(0.0005)
 
         return finished
