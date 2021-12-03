@@ -63,7 +63,7 @@ def read_imu(imu):
     # Magnetometer_Y = imu.magnetic[1] #Unit: µT
     # Magnetometer_Z = imu.magnetic[2] #Unit: µT
     t2 = time.time()
-    print(f'IMU: {t2-t1}')
+    #print(f'IMU: {t2-t1}')
 
     # return Acceleration_X, Acceleration_Y, Acceleration_Z, Gyro_X, Gyro_Y, Gyro_Z, Magnetometer_X, Magnetometer_Y, Magnetometer_Z
     return accel + gyro + magn
@@ -119,7 +119,7 @@ def read_accelerometer(accel):
     accel_vals = accel.read_acce_xyz()
     accel_vals = [i * g for i in accel_vals]
     t2 = time.time()
-    print(f'Accelerometer: {t2 - t1}')
+    #print(f'Accelerometer: {t2 - t1}')
 
     return accel_vals
 
@@ -150,6 +150,6 @@ def read_altimeter(altimeter):
     Altitude = altimeter.altitude
     Temperature = altimeter.temperature
     t2 = time.time()
-    print(f'Altimeter: {t2 - t1}')
+    #print(f'Altimeter: {t2 - t1}')
 
     return Pressure, Altitude, Temperature

@@ -70,7 +70,7 @@ class BMP3XX:
         self._read_coefficients()
         self.reset()
         self.sea_level_pressure = 1013.25
-        self._wait_time = 0.000001  # change this value to have faster reads if needed
+        self._wait_time = 0.0001  # change this value to have faster reads if needed
         """Sea level pressure in hPa."""
 
     @property
@@ -325,7 +325,7 @@ class BMP3XX_SPI(BMP3XX):
         self._spi = spi_device.SPIDevice(spi, cs)
         # toggle CS low/high to put BMP3XX in SPI mode
         with self._spi:
-            time.sleep(0.001)
+            time.sleep(0.01)
         super().__init__()
 
     def _read_register(self, register, length):
