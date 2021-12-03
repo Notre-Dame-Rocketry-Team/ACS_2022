@@ -1,14 +1,17 @@
 import board
-import adafruit_icm20x
-import adafruit_bmp3xx
 import sys
 import time
+import adafruit_icm20x
+import adafruit_bmp3xx
+import DFRobot_LIS
 
 # Add DFRobot_LIS import
 # LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
 # sys.path.append(LIS_PATH)
 
-import DFRobot_LIS
+
+# Payload sensors
+import FaBo9Axis_MPU9250
 
 # Constants
 TIME_LABEL = ['Time']
@@ -17,6 +20,10 @@ ICM_LABELS = ['ICM Acceleration X', 'ICM Acceleration Y', 'ICM Acceleration Z',
               'ICM Magnetometer X', 'ICM Magnetometer Y', 'ICM Magnetometer Z']
 LIS_LABELS = ['LIS Acceleration X', 'LIS Acceleration Y', 'LIS Acceleration Z']
 BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
+MPU_LABELS = ['MPU Acceleration X']
+MPU_LABELS = ['MPU Acceleration X', 'MPU Acceleration Y', 'MPU Acceleration Z',
+              'MPU Gyroscope X',    'MPU Gyroscope Y',    'MPU Gyroscope Z',
+              'MPU Magnetometer X', 'MPU Magnetometer Y', 'MPU Magnetometer Z']
 g = 9.80665
 
 
@@ -28,6 +35,28 @@ def init_time():
 def read_time(_):
     return [time.time()]
 
+# MPU9250
+def init_mpu():
+    imu = FaBo9Axis_MPU9250.MPU9250()
+    imu.configMPU9250(FaBo9Axis_MPU9250.GFS_2000, FaBo9Axis_MPU9250.AFS_16G)
+
+    return imu, MPU_LABELS
+
+def read_mpu(imu):
+    try:
+        accel = imu.readAccel().values()
+    except:
+        accel = (0, 0, 0)
+    try:
+        magn = imu.readMagnet().values()
+    except:
+        magn = (0, 0, 0)
+    try:
+        gyro = imu.readGyro().values()
+    except:
+        gyro = (0, 0, 0)
+
+    return [*accel, *gyro, *magn]
 
 # IMU
 def init_imu():

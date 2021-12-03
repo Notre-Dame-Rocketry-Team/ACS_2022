@@ -14,11 +14,13 @@ SAVE_SUFFIX = '.csv'
 INIT_FUNCTIONS = [sensors.init_time,
                   sensors.init_imu,
                   sensors.init_accelerometer,
-                  sensors.init_altimeter]
+                  sensors.init_altimeter,
+                  sensors.init_mpu]
 READ_FUNCTIONS = [sensors.read_time,
                   sensors.read_imu,
                   sensors.read_accelerometer,
-                  sensors.read_altimeter]
+                  sensors.read_altimeter,
+                  sensors.read_mpu]
 
 
 def find_new_name():
