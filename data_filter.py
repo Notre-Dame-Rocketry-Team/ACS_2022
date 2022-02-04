@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 # import openpyxl
 from filterpy.kalman import KalmanFilter
-from filterpy.common import Q_discrete_white_noise
+# from filterpy.common import Q_discrete_white_noise
 
 
 # Global variables
@@ -59,7 +59,7 @@ def initialize_filter(manager: Data_Manager):
     my_filter.x = np.array([0,0,0])
 
     # Initialize data manager
-    manager.add_data(data_manager.Scalar_Data('kalman_height'))
+    manager.add_data(data_manager.Scalar_Data('kalman_altitude'))
     manager.add_data(data_manager.Scalar_Data('kalman_velocity'))
     manager.add_data(data_manager.Scalar_Data('kalman_acceleration'))
 
@@ -94,12 +94,12 @@ def get_dt(in_time):
     t_prev = in_time
     return dt
 
-def transform_adxl(in_accel):
+def transform_LIS(in_accel):
     out_accel = float(in_accel[2])-9.5244
     #print(f'ADXL: {in_accel[2]}, {out_accel}')
     return out_accel
 
-def transform_mpu(in_accel):
+def transform_ICM(in_accel):
     out_accel = g*(float(in_accel[2])-0.53)
     #print(f'MPU: {in_accel[2]}, {out_accel}')
     return out_accel
@@ -107,7 +107,7 @@ def transform_mpu(in_accel):
 
 def filter_data(manager: Data_Manager):
     """
-    Author: Patrick
+    Author: Patrick Faley
     This is the main function, which 
     filters incoming sensor data
     Input: sensor_data - a dict of data with these fields:
@@ -115,15 +115,15 @@ def filter_data(manager: Data_Manager):
           containing the x, y, and z
           accelerations
         - altimeter: the current height
-          of the rocket
+          of the launch vehicle
         - imu: a dict containing data from the IMU
             - acceleration: ordered tuple containing
               x, y, and z accelerations
             - orientation: ordered tuple containing
-              the roll, pitch, and yaw of the rocket
+              the roll, pitch, and yaw of the launch vehicle
     Output: ordered tuple containing the estimated
     height, (vertical) velocity, acceleration, and angle
-    with   the ground
+    with the ground
     """
 
     # Load globals
@@ -137,15 +137,15 @@ def filter_data(manager: Data_Manager):
     # Read in sensor data
     measurements = []
     if 'Altimeter' in manager.active_sensors:
-        measurements.append(float(manager.read_field('mpl_altitude').get_value()))
+        measurements.append(float(manager.read_field('BMP_altitude').get_value()))
     if 'Accelerometer' in manager.active_sensors:
-        accel = manager.read_field('adxl_acceleration').get_value_list()
-        measurements.append(transform_adxl(accel))
+        accel = manager.read_field('LIS_acceleration').get_value_list()
+        measurements.append(transform_LIS(accel))
     if 'IMU' in manager.active_sensors:
-        accel = manager.read_field('mpu_acceleration').get_value_list()
-        measurements.append(transform_mpu(accel))
+        accel = manager.read_field('ICM_acceleration').get_value_list()
+        measurements.append(transform_ICM(accel))
             
-    t = float(manager.read_field('time').get_value())
+    t = float(manager.read_field('Time').get_value())
     dt = get_dt(t)
 
     # Appropriately update filter parameters
@@ -158,7 +158,7 @@ def filter_data(manager: Data_Manager):
 
     # Log the output
     y,v,a = my_filter.x
-    manager.update_field('kalman_height', y)
+    manager.update_field('kalman_altitude', y)
     manager.update_field('kalman_velocity', v)
     manager.update_field('kalman_acceleration', a)
 

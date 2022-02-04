@@ -77,7 +77,7 @@ class Data_Manager:
         """
         Returns a list of the flattened field names
         """
-        return [i for j in self.data.values() for i in j.get_field_names()]
+        return [i for j in self.data.values() for i in j.get_field_names()] # Flattened = [[1,2],[3,4]] => [1,2,3,4]
 
     def get_field_values(self):
         """
