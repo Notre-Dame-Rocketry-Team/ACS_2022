@@ -1,19 +1,18 @@
 import time
-import sys
 import board
 import pulseio
 
-buzzer = pulseio.PWMOut(board.D6, variable_frequency=True)
+class buzzer:
 
-buzzer.frequency = sys.argv[1]
+    def __init__(self):
+        self.buzzer = pulseio.PWMOut(board.D6, variable_frequency=False)
 
-OFF = 0
-ON = 2**15
 
-buzzer.duty_cycle = ON
 
-time.sleep(sys.argv[2])
-
-buzzer.duty_cycle = OFF
+    def beep(self,frequency,beeptime): # Set beep time in seconds; Set frequency in Hz
+        buzzer.frequency = frequency
+        buzzer.duty_cycle = 2**15
+        time.sleep(beeptime)
+        buzzer.duty_cycle = 0
 
 
