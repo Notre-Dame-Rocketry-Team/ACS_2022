@@ -12,12 +12,12 @@ from data_manager import Data_Manager
 import DFRobot_LIS
 
 # Constants
-TIME_LABEL = ['Time']
-ICM_LABELS = ['ICM Acceleration X', 'ICM Acceleration Y', 'ICM Acceleration Z',
-              'ICM Gyroscope X',    'ICM Gyroscope Y',    'ICM Gyroscope Z',
-              'ICM Magnetometer X', 'ICM Magnetometer Y', 'ICM Magnetometer Z']
-LIS_LABELS = ['LIS Acceleration X', 'LIS Acceleration Y', 'LIS Acceleration Z']
-BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
+#TIME_LABEL = ['Time']
+#ICM_LABELS = ['ICM Acceleration X', 'ICM Acceleration Y', 'ICM Acceleration Z',
+#              'ICM Gyroscope X',    'ICM Gyroscope Y',    'ICM Gyroscope Z',
+#              'ICM Magnetometer X', 'ICM Magnetometer Y', 'ICM Magnetometer Z']
+#LIS_LABELS = ['LIS Acceleration X', 'LIS Acceleration Y', 'LIS Acceleration Z']
+#BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
 g = 9.80665
 
 accelerometer = None

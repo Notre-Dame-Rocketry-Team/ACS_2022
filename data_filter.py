@@ -1,7 +1,7 @@
 """
 This file contains all the code used to 
 filter the sensor data, with whatever
-libraries are required
+libraries are required.
 """
 
 # Import libraries
@@ -59,9 +59,9 @@ def initialize_filter(manager: Data_Manager):
     my_filter.x = np.array([0,0,0])
 
     # Initialize data manager
-    manager.add_data(data_manager.Scalar_Data('kalman_altitude'))
-    manager.add_data(data_manager.Scalar_Data('kalman_velocity'))
-    manager.add_data(data_manager.Scalar_Data('kalman_acceleration'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_velocity'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
 
     
 def gen_phi(dt):
@@ -158,8 +158,8 @@ def filter_data(manager: Data_Manager):
 
     # Log the output
     y,v,a = my_filter.x
-    manager.update_field('kalman_altitude', y)
-    manager.update_field('kalman_velocity', v)
-    manager.update_field('kalman_acceleration', a)
+    manager.update_field('Kalman_altitude', y)
+    manager.update_field('Kalman_velocity', v)
+    manager.update_field('Kalman_acceleration', a)
 
     #print(f'Kalman: {a}')

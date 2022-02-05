@@ -1,9 +1,10 @@
 """
 This file contains the main code, which will
 continually read data from sensors, filter it, 
-and write output.
+and write output. It will also call functions to
+change the current vehicle state and acs state.
 Author: Daniel Noronha
-Major Contributions from Patrick Faley and other ACS squad members
+With contributions from Patrick Faley and other ACS squad members
 """
 # Import libraries
 import time
@@ -11,6 +12,8 @@ import traceback
 import data_filter
 import scribe
 import sensors
+import state
+import acs_states
 import beep
 from data_manager import Data_Manager
 
@@ -18,12 +21,11 @@ from data_manager import Data_Manager
 SAVE_PATH = './data/'
 SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
+MAX_OLD_STATE = 5 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
 
 # piezo = beep.buzzer()
 
 if __name__ == '__main__':
-    # Initialize sensors
-    # sensors, labels = initialize_sensors()
     # Define Active Sensors
     active_sensors = ['IMU', 'Accelerometer', 'Altimeter']
     # Initialize Data Manager
@@ -32,19 +34,22 @@ if __name__ == '__main__':
     sensors.initialize_sensors(manager)
     # Initialize Kalman Filter
     data_filter.initialize_filter(manager)
-    # Initialize the Buzzer
-    beep.init()
-    beep.beep(440,2) # One *beep* to verify that the code is running!
+    # Initialize the Launch Vehicle state (OnGround)
+    state.init_state(manager)
+    # Initialize the ACS State (ACS_Armed)
+    acs_states.init_acs_state(manager)
 
     # Get filename and Create csv file (pointer)
     save_fname = scribe.find_new_name(SAVE_PATH, SAVE_NAME, SAVE_SUFFIX)
-    f = open(save_fname, 'w', newline='')
+    file_p = open(save_fname, 'w', newline='')
     # Initialize CSV
-    scribe.newCSV(f, manager.get_field_names()) # Write Headers
+    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
+    # Initialize the Buzzer
+    beep.init()
+    beep.beep(440,2) # One *beep* to verify that the code is running and all initializations are complete!
 
-    # Initialize CSV
 
-
+    current_state_lst = []
     while True:
         try:
             print('--- Beginning Cycle ---')
@@ -53,28 +58,68 @@ if __name__ == '__main__':
             # data = sensors.read_sensors(sensors)
             sensors.read_sensors(manager)
             t2 = time.time()
-            print(f'Total Sensor Read Time: {t2 - t1}')
+            print(f'Total Sensor Read Time: {t2 - t1}s')
+
             # Filter data
             t1 = time.time()
             data_filter.filter_data(manager)
             t2 = time.time()
-            print(f'Total Data Filtering Time: {t2 - t1}')
-            # Write to CSV
+            print(f'Total Data Filtering Time: {t2 - t1}s')
+
+            # Update Current Launch Vehicle State
             t1 = time.time()
-            scribe.addRow(f, manager.get_field_values())
+            current_state = state.state_transition(manager)
             t2 = time.time()
-            print(f'Data Write Time: {t2 - t1}')
+            print(f'Launch Vehicle State Update Time: {t2 - t1}s')
+
+            # Update ACS State
+            t1 = time.time()
+            if len(current_state_lst) < MAX_OLD_STATE:
+                current_state_lst.append(current_state)
+            else:
+                current_state_lst = []
+                current_state_lst.append(current_state)
+                # If OnGround (reported 5 times consequtively)
+            if  (len(current_state_lst) == MAX_OLD_STATE):
+                if (current_state == state.states[0]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                    acs_states.acs_inactive(manager) # ACS Inactive
+                # If PoweredAscent (reported 5 times consequtively)
+                elif (current_state == state.states[1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                    acs_states.acs_armed(manager) # ACS Armed
+                # If Burnout (reported 5 times consequtively)
+                elif (current_state == state.states[2]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                    acs_states.acs_active(manager) # ACS Active
+                # If Overshoot (reported 5 times consequtively)
+                elif (current_state == state.states[3]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                    acs_states.acs_active_MAX(manager) # ACS Active MAX
+                # If Apogee (reported 5 times consequtively)
+                elif (current_state == state.states[-1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                    acs_states.acs_inactive(manager) # ACS Inactive
+            else:
+                manager.update_field('ACS_state',acs_states.acs_state)
+            t2 = time.time()
+            print(f'ACS State Update Time: {t2 - t1}s')
+
+            # Write/Log to CSV
+            t1 = time.time()
+            scribe.addRow(file_p, manager.get_field_values())
+            t2 = time.time()
+            print(f'Data Write Time: {t2 - t1}s')
             print()
         # Error Handling
         except Exception:
-            print('Sorry, this program is experiencing a glitch :(')
+            print('Sorry, this program is experiencing a glitch :-(')
             print(traceback.format_exc())
-            f.close()
+            acs_states.acs_FAILURE(manager)
+            file_p.close()
             for beeps in range(1,10):
                 beep.beep(2000,1)
                 time.sleep(0.5)
+            break
 
 
+# Initialize sensors
+# sensors, labels = initialize_sensors()
 #INIT_FUNCTIONS = [sensors.init_time,
 #                  sensors.init_imu,
 #                   sensors.init_accelerometer,
