@@ -26,6 +26,8 @@ MAX_OLD_STATE = 5 # How many times should the same state be reported consequtive
 if __name__ == '__main__':
     # Define Active Sensors
     active_sensors = ['IMU', 'Accelerometer', 'Altimeter']
+    # Initialize the Buzzer
+    beep.init()
     # Initialize Data Manager
     manager = Data_Manager(active_sensors)
     # Initialize Sensors
@@ -42,8 +44,7 @@ if __name__ == '__main__':
     file_p = open(save_fname, 'w', newline='')
     # Initialize CSV
     scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
-    # Initialize the Buzzer
-    beep.init()
+
     beep.beep(440,2) # One *beep* to verify that the code is running and all initializations are complete!
 
 
