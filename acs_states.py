@@ -9,7 +9,7 @@ ACS States as part of the control algorithm.
 import data_manager
 from data_manager import Data_Manager
 import Rpi.GPIO as GPIO
-# Possible ACS States - to be coded
+
 acs_states = [
     'ACS_Inactive'
     'ACS_Armed'
