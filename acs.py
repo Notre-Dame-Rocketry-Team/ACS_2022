@@ -23,8 +23,6 @@ SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
 MAX_OLD_STATE = 5 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
 
-# piezo = beep.buzzer()
-
 if __name__ == '__main__':
     # Define Active Sensors
     active_sensors = ['IMU', 'Accelerometer', 'Altimeter']
@@ -113,7 +111,7 @@ if __name__ == '__main__':
             acs_states.acs_FAILURE(manager)
             file_p.close()
             for beeps in range(1,10):
-                beep.beep(2000,1)
+                beep.beep(2000,1) # ERROR *BEEPS*
                 time.sleep(0.5)
             break
 
