@@ -11,10 +11,10 @@ from data_manager import Data_Manager
 import RPi.GPIO as GPIO
 
 acs_states = [
-    'ACS_Inactive'
-    'ACS_Armed'
-    'ACS_Active'
-    'ACS_Active_MAX'
+    'ACS_Inactive',
+    'ACS_Armed',
+    'ACS_Active',
+    'ACS_Active_MAX',
     'ACS_Failure'
 ]
 acs_state = ''

@@ -190,9 +190,9 @@ def read_altimeter(manager: Data_Manager):
         Temperature = altimeter.temperature
     except:
         Temperature = 0
-    manager.update_field('BMP_altitude') # in meters
-    manager.update_field('BMP_pressure') # in hPa
-    manager.update_field('BMP_temperature') # in °C
+    manager.update_field('BMP_altitude',Altitude) # in meters
+    manager.update_field('BMP_pressure',Pressure) # in hPa
+    manager.update_field('BMP_temperature',Temperature) # in °C
     #t2 = time.time()
     #print(f'Altimeter: {t2 - t1}')
     # return Pressure, Altitude, Temperature

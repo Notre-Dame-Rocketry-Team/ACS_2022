@@ -12,8 +12,8 @@ from data_manager import Data_Manager
 states = [
     'OnGround',
     'PoweredAscent',
-    'Burnout'
-    'Overshoot'
+    'Burnout',
+    'Overshoot',
     'Apogee'
 ]
 state = ''
