@@ -29,7 +29,7 @@ class Scalar_Data(Data):
         self.value = 0
 
 class Tuple_Data(Data):
-    def __init__(self, name, num_vals=[0,1,2]):
+    def __init__(self, name, num_vals=['x','y','z']):
         super().__init__(name)
         self.num_vals = num_vals
         self.value = [0 for i in num_vals]
