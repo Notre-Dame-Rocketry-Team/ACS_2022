@@ -40,6 +40,6 @@ time.sleep(0.1)
 while True:
     #Get the acceleration in the three directions of xyz one time 
     x,y,z = acce.read_acce_xyz()
-    print("Acceleration [X = %.2d g,Y = %.2d g,Z = %.2d g]"%(x,y,z))
+    print("Acceleration [X = %.3f g,Y = %.3f g,Z = %.3f g]"%(x,y,z))
     time.sleep(1)
     

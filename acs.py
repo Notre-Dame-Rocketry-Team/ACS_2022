@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # Initialize CSV
     scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
 
-    beep.beep(440,2) # One *beep* to verify that the code is running and all initializations are complete!
+    #beep.beep(440,2) # One *beep* to verify that the code is running and all initializations are complete!
 
 
     current_state_lst = []
@@ -111,9 +111,9 @@ if __name__ == '__main__':
             print(traceback.format_exc())
             acs_states.acs_FAILURE(manager)
             file_p.close()
-            for beeps in range(1,10):
-                beep.beep(2000,1) # ERROR *BEEPS*
-                time.sleep(0.5)
+            #for beeps in range(1,10):
+            #    beep.beep(2000,1) # ERROR *BEEPS*
+            #    time.sleep(0.5)
             break
 
 

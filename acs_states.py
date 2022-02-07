@@ -8,7 +8,7 @@ ACS States as part of the control algorithm.
 # import PID_control
 import data_manager
 from data_manager import Data_Manager
-import Rpi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 acs_states = [
     'ACS_Inactive'

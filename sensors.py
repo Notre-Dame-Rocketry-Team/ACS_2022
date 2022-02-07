@@ -37,6 +37,7 @@ def read_time(manager: Data_Manager):
 
 # IMU
 def init_imu(manager: Data_Manager) -> bool:
+    global imu
     i2c_imu = board.I2C()  # uses board.SCL and board.SDA
     imu = adafruit_icm20x.ICM20948(i2c_imu)
     imu.accelerometer_range = adafruit_icm20x.AccelRange.RANGE_16G
@@ -104,6 +105,7 @@ def init_accelerometer(manager: Data_Manager) -> bool:
     nametuple = (x_name, y_name, z_name)
     return valtuple, nametuple
     '''
+    global accelerometer
     # I2C_BUS         = board.I2C()
     I2C_BUS         = 0x01
     ADDRESS_1       = 0x19                   #Sensor address
@@ -152,6 +154,7 @@ def read_accelerometer(manager: Data_Manager):
 
 # Altimeter
 def init_altimeter(manager: Data_Manager) -> bool:
+    global altimeter
     # Initialize Altimeter Object
     i2c = board.I2C()
     altimeter = adafruit_bmp3xx.BMP3XX_I2C(i2c)
