@@ -20,7 +20,7 @@ print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (icm.acceleration))
 print("Gyro X:%.2f, Y: %.2f, Z: %.2f rads/s" % (icm.gyro))
 print("Magnetometer X:%.2f, Y: %.2f, Z: %.2f uT" % (icm.magnetic))
 print("")
-
+'''#
 # Initialize sensor
 i2c = board.I2C()
 altimeter = adafruit_bmp3xx.BMP3XX_I2C(i2c)
@@ -40,8 +40,8 @@ print(altimeter.pressure)
 print(altimeter.temperature)
 print(altimeter.altitude)
 
-
-
+'''#
+'''#
 I2C_BUS         = 0x01            #default use I2C1
 ADDRESS_1       = 0x19            #Sensor address 1
 acce = DFRobot_H3LIS200DL_I2C(I2C_BUS ,ADDRESS_1)
@@ -63,4 +63,5 @@ time.sleep(0.1)
 x,y,z = acce.read_acce_xyz()
 print("Acceleration [X = %.3f g,Y = %.3f g,Z = %.3f g]"%(x,y,z))
 time.sleep(1)
-    
+
+'''
