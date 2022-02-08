@@ -61,6 +61,7 @@ def init_imu(manager: Data_Manager) -> bool:
 def read_imu(manager: Data_Manager):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
     #t1 = time.time()
+    print(imu.acceleration)
     try:
         accel = imu.acceleration
     except:
@@ -84,7 +85,6 @@ def read_imu(manager: Data_Manager):
     # Magnetometer_Z = imu.magnetic[2] #Unit: µT
     #t2 = time.time()
     #print(f'IMU: {t2-t1}')
-    print(accel)
     manager.update_dict_field('ICM_acceleration', accel) #Unit: m/s^2
     manager.update_dict_field('ICM_gyroscope', gyro) #Unit: rad/s
     manager.update_dict_field('ICM_magnetometer', magn) #Unit: µT
