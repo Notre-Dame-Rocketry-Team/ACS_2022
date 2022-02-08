@@ -144,7 +144,7 @@ def read_accelerometer(manager: Data_Manager):
     print(acce.read_acce_xyz())
     try:
         accel_vals = acce.read_acce_xyz()
-        accel_vals = [i * g for i in accel_vals]
+        #accel_vals = [i * g for i in accel_vals]
     except:
         accel_vals = (0,0,0)
     manager.update_field('LIS_acceleration', accel_vals) # Unit: m/s^2 (originally in g)
