@@ -23,11 +23,22 @@ print("")
 
 # Initialize sensor
 i2c = board.I2C()
-bmp = adafruit_bmp3xx.BMP3XX_I2C(i2c)
+altimeter = adafruit_bmp3xx.BMP3XX_I2C(i2c)
+altimeter.pressure_oversampling = 1
+altimeter.temperature_oversampling = 1
+altimeter.filter_coefficient = 0
+
+# Zero out altimeter
+N = 100
+sea_sum = 0
+for _ in range(N):
+    sea_sum += altimeter.pressure
+    time.sleep(0.01)
+altimeter.sea_level_pressure = sea_sum / N
 # Get pressure/temperature readings
-print(bmp.pressure)
-print(bmp.temperature)
-print(bmp.altitude)
+print(altimeter.pressure)
+print(altimeter.temperature)
+print(altimeter.altitude)
 
 
 
