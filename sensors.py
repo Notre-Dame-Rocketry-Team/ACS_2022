@@ -22,7 +22,7 @@ g = 9.80665
 
 acce = None
 altimeter = None
-imu = None
+icm = None
 
 # Timer
 def init_time(manager: Data_Manager) -> bool:
@@ -37,9 +37,9 @@ def read_time(manager: Data_Manager):
 
 # IMU
 def init_imu(manager: Data_Manager) -> bool:
-    global imu
-    i2c_imu = board.I2C()  # uses board.SCL and board.SDA
-    imu = adafruit_icm20x.ICM20948(i2c_imu)
+    global icm
+    i2c = board.I2C()  # uses board.SCL and board.SDA
+    icm = adafruit_icm20x.ICM20948(i2c)
     #imu.accelerometer_range = adafruit_icm20x.AccelRange.RANGE_16G
     #imu.MagDataRate = 'RATE_100HZ'
     #imu.accelerometer_data_rate = 1125
@@ -61,17 +61,17 @@ def init_imu(manager: Data_Manager) -> bool:
 def read_imu(manager: Data_Manager):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
     #t1 = time.time()
-    print(imu.acceleration)
+    print(icm.acceleration)
     try:
-        accel = imu.acceleration
+        accel = icm.acceleration
     except:
         accel = (0,0,0)
     try:
-        gyro = imu.gyro
+        gyro = icm.gyro
     except:
         gyro = (0,0,0)
     try:
-        magn = imu.magnetic
+        magn = icm.magnetic
     except:
         magn = (0,0,0)
     # Acceleration_X = imu.acceleration[0] #Unit: m/s^2
