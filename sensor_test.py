@@ -13,7 +13,6 @@ sys.path.append(LIS_PATH)
 from DFRobot_LIS import *
 import time
 
-print('Altitude: {} meters'.format(bmp.altitude))
 i2c = board.I2C()  # uses board.SCL and board.SDA
 icm = adafruit_icm20x.ICM20948(i2c)
 
@@ -29,6 +28,7 @@ bmp.sea_level_pressure = 1013.25
 # Get pressure/temperature readings
 print("Pressure: {:6.1f}".format(bmp.pressure))
 print("Temperature: {:5.2f}".format(bmp.temperature))
+print('Altitude: {} meters'.format(bmp.altitude))
 
 
 
