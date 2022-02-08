@@ -24,11 +24,10 @@ print("")
 # Initialize sensor
 i2c = board.I2C()
 bmp = adafruit_bmp3xx.BMP3XX_I2C(i2c)
-bmp.sea_level_pressure = 1013.25
 # Get pressure/temperature readings
-print("Pressure: {:6.1f}".format(bmp.pressure))
-print("Temperature: {:5.2f}".format(bmp.temperature))
-print('Altitude: {} meters'.format(bmp.altitude))
+print(bmp.pressure)
+print(bmp.temperature)
+print(bmp.altitude)
 
 
 
