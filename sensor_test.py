@@ -2,16 +2,16 @@
 Test all sensors together
 '''
 
-import time
+#import time
 import board
 import adafruit_icm20x
 #import adafruit_bmp3xx
-import sys
-LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
-sys.path.append(LIS_PATH)
+#import sys
+#LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
+#sys.path.append(LIS_PATH)
 
-from DFRobot_LIS import *
-import time
+#from DFRobot_LIS import *
+#import time
 
 i2c = board.I2C()  # uses board.SCL and board.SDA
 icm = adafruit_icm20x.ICM20948(i2c)
@@ -20,6 +20,7 @@ print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (icm.acceleration))
 print("Gyro X:%.2f, Y: %.2f, Z: %.2f rads/s" % (icm.gyro))
 print("Magnetometer X:%.2f, Y: %.2f, Z: %.2f uT" % (icm.magnetic))
 print("")
+
 '''#
 # Initialize sensor
 i2c = board.I2C()
