@@ -61,7 +61,7 @@ def init_imu(manager: Data_Manager) -> bool:
 def read_imu(manager: Data_Manager):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
     #t1 = time.time()
-    print(icm.acceleration)
+    print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (icm.acceleration))
     try:
         accel = icm.acceleration
     except:
@@ -141,10 +141,9 @@ def read_accelerometer(manager: Data_Manager):
     return acc_x, acc_y, acc_z
     '''
     #t1 = time.time()
-    print(acce.read_acce_xyz())
     try:
         accel_vals = acce.read_acce_xyz()
-        #accel_vals = [i * g for i in accel_vals]
+        accel_vals = [i * g for i in accel_vals]
     except:
         accel_vals = (0,0,0)
     manager.update_field('LIS_acceleration', accel_vals) # Unit: m/s^2 (originally in g)
