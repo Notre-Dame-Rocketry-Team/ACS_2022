@@ -61,7 +61,6 @@ def init_imu(manager: Data_Manager) -> bool:
 def read_imu(manager: Data_Manager):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
     #t1 = time.time()
-    print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (icm.acceleration))
     try:
         accel = icm.acceleration
     except:
@@ -179,7 +178,6 @@ def init_altimeter(manager: Data_Manager) -> bool:
 
 def read_altimeter(manager: Data_Manager):
     #t1 = time.time()
-    print(altimeter.altitude)
     try:
         Pressure = altimeter.pressure
     except:
