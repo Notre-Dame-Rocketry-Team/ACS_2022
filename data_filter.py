@@ -95,12 +95,12 @@ def get_dt(in_time):
     return dt
 
 def transform_LIS(in_accel):
-    out_accel = float(in_accel[2])-9.5244
+    out_accel = float(in_accel[2])#-9.5244
     #print(f'ADXL: {in_accel[2]}, {out_accel}')
     return out_accel
 
 def transform_ICM(in_accel):
-    out_accel = g*(float(in_accel[2])-0.53)
+    out_accel = (float(in_accel[2]))#-0.53) #g*
     #print(f'MPU: {in_accel[2]}, {out_accel}')
     return out_accel
 
