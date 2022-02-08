@@ -141,6 +141,7 @@ def read_accelerometer(manager: Data_Manager):
     return acc_x, acc_y, acc_z
     '''
     #t1 = time.time()
+    print(accelerometer.read_acce_xyz())
     try:
         accel_vals = accelerometer.read_acce_xyz()
         accel_vals = [i * g for i in accel_vals]
@@ -179,6 +180,7 @@ def init_altimeter(manager: Data_Manager) -> bool:
 
 def read_altimeter(manager: Data_Manager):
     #t1 = time.time()
+    print(altimeter.altitude)
     try:
         Pressure = altimeter.pressure
     except:
