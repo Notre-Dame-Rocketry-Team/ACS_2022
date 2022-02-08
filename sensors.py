@@ -20,7 +20,7 @@ import DFRobot_LIS
 #BMP_LABELS = ['BMP Pressure',       'BMP Altitude',       'BMP Temperature']
 g = 9.80665
 
-accelerometer = None
+acce = None
 altimeter = None
 imu = None
 
@@ -106,7 +106,7 @@ def init_accelerometer(manager: Data_Manager) -> bool:
     nametuple = (x_name, y_name, z_name)
     return valtuple, nametuple
     '''
-    global accelerometer
+    global acce
     # I2C_BUS         = board.I2C()
     I2C_BUS         = 0x01
     ADDRESS_1       = 0x19                   #Sensor address
@@ -141,9 +141,9 @@ def read_accelerometer(manager: Data_Manager):
     return acc_x, acc_y, acc_z
     '''
     #t1 = time.time()
-    print(accelerometer.read_acce_xyz())
+    print(acce.read_acce_xyz())
     try:
-        accel_vals = accelerometer.read_acce_xyz()
+        accel_vals = acce.read_acce_xyz()
         accel_vals = [i * g for i in accel_vals]
     except:
         accel_vals = (0,0,0)
