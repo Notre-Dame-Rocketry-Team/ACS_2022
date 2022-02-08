@@ -114,6 +114,7 @@ def init_accelerometer(manager: Data_Manager) -> bool:
     #Chip initialization
     acce.begin()
     acce.set_range(acce.H3LIS200DL_100G)
+    
     #acce.set_range(acce.LIS331HH_6G)
     acce.set_acquire_rate(acce.NORMAL_400HZ)
     time.sleep(0.1)
