@@ -40,14 +40,14 @@ def init_imu(manager: Data_Manager) -> bool:
     global imu
     i2c_imu = board.I2C()  # uses board.SCL and board.SDA
     imu = adafruit_icm20x.ICM20948(i2c_imu)
-    imu.accelerometer_range = adafruit_icm20x.AccelRange.RANGE_16G
-    imu.MagDataRate = 'RATE_100HZ'
-    imu.accelerometer_data_rate = 1125
-    imu.gyro_data_rate = 1100
-    imu.mag_data_rate = 1125
-    imu.accel_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.FREQ_473HZ_3DB
-    imu.gyro_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
-    imu.mag_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
+    #imu.accelerometer_range = adafruit_icm20x.AccelRange.RANGE_16G
+    #imu.MagDataRate = 'RATE_100HZ'
+    #imu.accelerometer_data_rate = 1125
+    #imu.gyro_data_rate = 1100
+    #imu.mag_data_rate = 1125
+    #imu.accel_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.FREQ_473HZ_3DB
+    #imu.gyro_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
+    #imu.mag_dlpf_cutoff = adafruit_icm20x.AccelDLPFFreq.DISABLED
     # imu.gyro_data_rate_divisor = 200
     # imu.mag_data_rate_divisor = 100
 
@@ -61,10 +61,10 @@ def init_imu(manager: Data_Manager) -> bool:
 def read_imu(manager: Data_Manager):
     # each attribute (acceleration,gyro,magnetic) is a tuple (x,y,z) -> Unpacked below.
     #t1 = time.time()
-    #try:
-    accel = imu.acceleration
-    #except:
-    #    accel = (0,0,0)
+    try:
+        accel = imu.acceleration
+    except:
+        accel = (0,0,0)
     try:
         gyro = imu.gyro
     except:
