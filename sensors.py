@@ -116,7 +116,7 @@ def init_accelerometer(manager: Data_Manager) -> bool:
     acce.set_range(acce.H3LIS200DL_100G)
     #acce.set_range(acce.LIS331HH_6G)
     acce.set_acquire_rate(acce.NORMAL_400HZ)
-    acce.set_filter_mode(acce.SHUTDOWN)
+    time.sleep(0.1)
     manager.add_data(data_manager.Tuple_Data('LIS_acceleration'))
 
     return True
