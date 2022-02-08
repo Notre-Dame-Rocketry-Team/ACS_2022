@@ -5,7 +5,7 @@ Test all sensors together
 import time
 import board
 import adafruit_icm20x
-import adafruit_bmp3xx
+#import adafruit_bmp3xx
 import sys
 LIS_PATH = '/home/pi/repos/DFRobot_LIS/python/raspberrypi'
 sys.path.append(LIS_PATH)
