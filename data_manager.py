@@ -38,7 +38,9 @@ class Tuple_Data(Data):
         self.value = [value[i] for i in self.num_vals]
 
     def get_field_names(self):
-        return [f'{self.name}_{i}' for i in self.num_vals]
+        vars = ['x', 'y', 'z']
+        return [f'{self.name}_{i}' for i in vars]
+        #return [f'{self.name}_{i}' for i in self.num_vals]
 
     def get_value_list(self):
         return self.value
