@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # Initialize the Buzzer
     beep.init()
     # Initialize Data Manager
-    manager = Data_Manager(active_sensors)#
+    manager = Data_Manager(active_sensors)
     # Initialize Sensors
     sensors.initialize_sensors(manager)
     # Initialize Kalman Filter
