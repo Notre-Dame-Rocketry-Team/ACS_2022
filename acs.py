@@ -25,7 +25,7 @@ MAX_OLD_STATE = 5 # How many times should the same state be reported consequtive
 
 if __name__ == '__main__':
     # Define Active Sensors
-    active_sensors = ['IMU', 'Accelerometer', 'Altimeter']
+    active_sensors = ['IMU', 'Altimeter']#, 'Accelerometer']
     # Initialize the Buzzer
     beep.init()
     # Initialize Data Manager
@@ -47,7 +47,8 @@ if __name__ == '__main__':
 
     beep.beep(2000,2) # One *beep* to verify that the code is running and all initializations are complete!
 
-
+    count = 0 #
+    icm_acc_x = [] #
     current_state_lst = []
     while True:
         try:
@@ -56,6 +57,10 @@ if __name__ == '__main__':
             t1 = time.time()
             # data = sensors.read_sensors(sensors)
             sensors.read_sensors(manager)
+            count += 1#
+            icm_acc_x.append(sensors.icm.acceleration[0])#
+            print(f"Loop Count: {count}")
+            print(f"Avg_ICM_Accel_x: {sum(icm_acc_x)/len(icm_acc_x)}")
             t2 = time.time()
             print(f'Total Sensor Read Time: {t2 - t1}s')
 
