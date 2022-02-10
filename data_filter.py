@@ -19,7 +19,7 @@ my_filter = None
 t_prev = None
 
 g = 9.80665
-
+a = 0#
 
 # Functions
 def initialize_filter(manager: Data_Manager):
@@ -137,6 +137,7 @@ def filter_data(manager: Data_Manager):
 
     # Read in sensor data
     measurements = []
+    global a#
     if 'Altimeter' in manager.active_sensors:
         measurements.append(float(manager.read_field('BMP_altitude').get_value()))
     if 'Accelerometer' in manager.active_sensors:
