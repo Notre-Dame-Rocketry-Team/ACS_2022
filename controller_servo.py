@@ -13,7 +13,7 @@ import data_manager
 from data_manager import Data_Manager
 
 # CONSTANTS
-SERVO_PIN = 5
+CONTROLLER_PIN = 5
 
 # Global Constants defined in functions
 kit = None
@@ -33,7 +33,7 @@ def init_servo(manager: Data_Manager):
     '''
     # Continuous Rotation Servo
     global servo
-    servo = kit.continuous_servo[SERVO_PIN]
+    servo = kit.continuous_servo[CONTROLLER_PIN]
     manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
     return True
 
