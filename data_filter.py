@@ -101,7 +101,7 @@ def transform_LIS(in_accel):
 
 def transform_ICM(in_accel):
     #out_accel = g*(float(in_accel[2]))-0.53
-    out_accel = (float(in_accel[0]))-9.795813967536112
+    out_accel = (float(in_accel[0]))+9.795813967536112
     #print(f'MPU: {in_accel[2]}, {out_accel}')
     return out_accel
 
