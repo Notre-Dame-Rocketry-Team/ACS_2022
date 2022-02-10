@@ -52,6 +52,7 @@ if __name__ == '__main__':
     while True:
         try:
             print('--- Beginning Cycle ---')
+            print(f"KALMAN ACCELERATION: {data_filter.a}")#
             # Read sensors (unfiltered)
             t1 = time.time()
             # data = sensors.read_sensors(sensors)
