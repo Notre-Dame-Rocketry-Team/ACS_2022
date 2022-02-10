@@ -13,7 +13,7 @@ import data_manager
 from data_manager import Data_Manager
 
 # CONSTANTS
-CONTROLLER_PIN = 5
+CONTROLLER_PIN = 4
 
 # Global Constants defined in functions
 kit = None
@@ -48,8 +48,7 @@ def servo_throttle(throttle):#manager: Data_Manager
     '''
     servo.throttle = throttle
     #manager.update_field('servo_Throttle', throttle)
-    print(f"Servo Throttle: {throttle}") # Only for testing
-    print(f"Servo Throttle %: {throttle * 100}") # Only for testing
+    print(f"Servo Throttle: {throttle} = {throttle * 100}%") # Only for testing
     return throttle
 
 # TESTING
