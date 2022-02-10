@@ -13,7 +13,7 @@ import data_manager
 from data_manager import Data_Manager
 
 # CONSTANTS
-CONTROLLER_PIN = 4
+CONTROLLER_PIN = 5
 
 # Global Constants defined in functions
 kit = None
@@ -52,10 +52,18 @@ def servo_throttle(throttle):#manager: Data_Manager
     return throttle
 
 # TESTING
-init_controller()
-init_servo()
-servo_throttle(1)
-time.sleep(5)
-servo_throttle(-1)
-time.sleep(5)
-servo_throttle(0)
+try:
+    init_servo()
+    init_controller()
+    while True:
+#servo_throttle(1)
+#time.sleep(5)
+#servo_throttle(-1)
+#time.sleep(5)
+        servo_throttle(-1)
+except KeyboardInterrupt:
+    servo_throttle(0)
+    servo_throttle(0)
+    servo_throttle(0)
+
+
