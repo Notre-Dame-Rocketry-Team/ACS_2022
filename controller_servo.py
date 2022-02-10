@@ -56,3 +56,7 @@ def servo_throttle(throttle, manager: Data_Manager):
 init_controller()
 init_servo()
 servo_throttle(1)
+time.sleep(5)
+servo_throttle(-1)
+time.sleep(5)
+servo_throttle(0)
