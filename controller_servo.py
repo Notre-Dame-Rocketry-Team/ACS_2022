@@ -53,14 +53,14 @@ def servo_throttle(throttle):#manager: Data_Manager
 
 # TESTING
 try:
-    init_servo()
     init_controller()
+    init_servo()
     while True:
 #servo_throttle(1)
 #time.sleep(5)
 #servo_throttle(-1)
 #time.sleep(5)
-        servo_throttle(-1)
+        servo_throttle(0)
 except KeyboardInterrupt:
     servo_throttle(0)
     servo_throttle(0)
