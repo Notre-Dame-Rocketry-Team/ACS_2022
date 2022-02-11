@@ -36,7 +36,7 @@ if __name__ == '__main__':
     data_filter.initialize_filter(manager)
     # Initialize the Launch Vehicle state (OnGround)
     state.init_state(manager)
-    # Initialize the ACS State (ACS_Armed)
+    # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
 
     # Get filename and Create csv file (pointer)
@@ -52,13 +52,12 @@ if __name__ == '__main__':
     while True:
         try:
             print('--- Beginning Cycle ---')
-            print(f"KALMAN ACCELERATION: {data_filter.a}")#
             # Read sensors (unfiltered)
             t1 = time.time()
             # data = sensors.read_sensors(sensors)
             sensors.read_sensors(manager)
             count += 1#
-            print(f"Loop Count: {count}")
+            print(f"Cycle Count: {count}")
             t2 = time.time()
             print(f'Total Sensor Read Time: {t2 - t1}s')
 
