@@ -11,7 +11,6 @@ import time
 from adafruit_servokit import ServoKit
 import data_manager
 from data_manager import Data_Manager
-import RPi.GPIO as GPIO
 
 # CONSTANTS
 CONTROLLER_PIN = 5
@@ -27,50 +26,42 @@ def init_controller():
     '''
     global kit
     kit = ServoKit(channels=16)
-    GPIO.setmode(GPIO.BCM) # Initialize GPIO
-    GPIO.setup(23, GPIO.OUT, initial=1)
     return True
 
-def init_servo():# manager: Data_Manager
+def init_servo(manager: Data_Manager):
     '''
     This function initializes the Continuous rotation servo
     '''
     # Continuous Rotation Servo
     global servo
     servo = kit.continuous_servo[CONTROLLER_PIN]
-    #manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
+    manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
     return True
 
-def servo_throttle(throttle):#manager: Data_Manager
+def servo_throttle(throttle, manager: Data_Manager):
     '''
     This function allows the user to change the servo rotation speed.
     It is a continuous rotation servo.
     For full throttle: throttle = 1
-    For zero throttle(stop): throttle = 0
+    For zero throttle(STOP): throttle = 0.15
     For full reverse throttle: throttle = -1
     Enter a decimal value to control speeds inbetween -1 and 1.
     '''
     servo.throttle = throttle
-    #manager.update_field('servo_Throttle', throttle)
-    print(f"Servo Throttle: {throttle} = {throttle * 100}%") # Only for testing
+    manager.update_field('servo_Throttle', throttle)
+    #print(f"Servo Throttle: {throttle} = {throttle * 100}%") # Only for testing
     return throttle
 
 # TESTING
-try:
-    init_controller()
-    init_servo()
-    while True:
-        GPIO.output(23, 0)
-        servo_throttle(-1)
-        time.sleep(5)
-        servo_throttle(1)
-        time.sleep(7)
-        servo_throttle(STOP)
-        time.sleep(5)
+'''
+init_controller()
+init_servo()
+while True:
+    servo_throttle(-1)
+    time.sleep(5)
+    servo_throttle(1)
+    time.sleep(7)
+    servo_throttle(STOP)
+    time.sleep(5)
         #GPIO.output(23,1)
-except KeyboardInterrupt:
-    servo_throttle(STOP)
-    servo_throttle(STOP)
-    servo_throttle(STOP)
-    GPIO.output(23, 1)
-
+'''
