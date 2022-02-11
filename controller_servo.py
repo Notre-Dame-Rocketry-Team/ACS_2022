@@ -68,7 +68,7 @@ try:
 #time.sleep(5)
 #servo_throttle(-1)
 #time.sleep(5)
-        servo_throttle(0)
+        #servo_throttle(0)
 except KeyboardInterrupt:
     GPIO.output(23, 1)
     servo_throttle(0)
