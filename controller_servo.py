@@ -28,7 +28,7 @@ def init_controller():
     kit = ServoKit(channels=16)
     return True
 
-def init_servo():
+def init_servo(manager: Data_Manager):
     '''
     This function initializes the Continuous rotation servo
     '''
@@ -36,10 +36,10 @@ def init_servo():
     global servo
     servo = kit.continuous_servo[CONTROLLER_PIN]
     servo.throttle = STOP
-    #manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
+    manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
     return True
 
-def servo_throttle(throttle):
+def servo_throttle(throttle, manager: Data_Manager):
     '''
     This function allows the user to change the servo rotation speed.
     It is a continuous rotation servo.
@@ -49,12 +49,12 @@ def servo_throttle(throttle):
     Enter a decimal value to control speeds inbetween -1 and 1.
     '''
     servo.throttle = throttle
-    #manager.update_field('servo_Throttle', throttle)
+    manager.update_field('servo_Throttle', throttle)
     #print(f"Servo Throttle: {throttle} = {throttle * 100}%") # Only for testing
     return throttle
 
 # TESTING
-
+'''
 init_controller()
 init_servo()
 while True:
@@ -65,4 +65,4 @@ while True:
     servo_throttle(STOP)
     time.sleep(5)
         #GPIO.output(23,1)
-
+'''
