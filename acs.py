@@ -36,7 +36,7 @@ if __name__ == '__main__':
     data_filter.initialize_filter(manager)
     # Initialize the Launch Vehicle state (OnGround)
     state.init_state(manager)
-    # Initialize the ACS State (ACS_Armed)
+    # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
 
     # Get filename and Create csv file (pointer)

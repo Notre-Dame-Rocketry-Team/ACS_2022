@@ -3,8 +3,6 @@ This program contains functions to initialize the servo controller (PCA9685),
 the servo, and to actuate the servo motor.
 '''
 
-# RUN sudo pip3 install adafruit-circuitpython-pca9685
-# RUN sudo pip3 install adafruit-circuitpython-servokit
 
 # Imports
 import time
@@ -15,6 +13,8 @@ from data_manager import Data_Manager
 # CONSTANTS
 CONTROLLER_PIN = 5
 STOP = 0.15 # Use this for servo.throttle() to stop the motor
+MAX_UP = -1
+MAX_DOWN = 1
 
 # Global Constants defined in functions
 kit = None
@@ -35,6 +35,7 @@ def init_servo(manager: Data_Manager):
     # Continuous Rotation Servo
     global servo
     servo = kit.continuous_servo[CONTROLLER_PIN]
+    servo.throttle = STOP
     manager.add_data(data_manager.Scalar_Data('servo_Throttle'))
     return True
 
@@ -42,9 +43,9 @@ def servo_throttle(throttle, manager: Data_Manager):
     '''
     This function allows the user to change the servo rotation speed.
     It is a continuous rotation servo.
-    For full throttle: throttle = 1
+    To move up: throttle = -1
     For zero throttle(STOP): throttle = 0.15
-    For full reverse throttle: throttle = -1
+    To move down: throttle = 1
     Enter a decimal value to control speeds inbetween -1 and 1.
     '''
     servo.throttle = throttle

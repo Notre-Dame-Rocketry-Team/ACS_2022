@@ -4,7 +4,7 @@ This program defines the possible
 ACS States as part of the control algorithm.
 '''
 # Imports
-# import controller_servo
+import controller_servo
 # import PID_control
 import data_manager
 from data_manager import Data_Manager
@@ -22,7 +22,9 @@ def init_acs_state(manager: Data_Manager) -> bool:
     '''
     This function adds 'ACS_state' to the data manager for logging purposes.
     '''
-    # Call controller_servo initialization function here
+    controller_servo.init_controller()
+    controller_servo.init_servo(manager)
+    controller_servo.servo_throttle(controller_servo.STOP)
     global acs_state
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
@@ -35,6 +37,7 @@ def acs_inactive(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[0]
+    controller_servo.servo_throttle(controller_servo.STOP)
     manager.update_field('ACS_state',acs_state)
 
 
@@ -44,6 +47,7 @@ def acs_armed(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
+    controller_servo.servo_throttle(controller_servo.STOP)
     manager.update_field('ACS_state',acs_state)
 
 def acs_active(manager: Data_Manager):
@@ -51,6 +55,7 @@ def acs_active(manager: Data_Manager):
     This function calls the PID control algorithm to actuate the servo
     '''
     # Call PID_control functions here as required
+    # controller_servo.servo_throttle(controller_servo.MAX_UP)
     global acs_state
     acs_state = acs_states[2] # ACS_Active
     manager.update_field('ACS_state',acs_state)
