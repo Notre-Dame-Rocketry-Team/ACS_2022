@@ -24,7 +24,7 @@ def init_acs_state(manager: Data_Manager) -> bool:
     '''
     controller_servo.init_controller()
     controller_servo.init_servo(manager)
-    controller_servo.servo_throttle(controller_servo.STOP)
+    controller_servo.servo_throttle(controller_servo.STOP, manager)
     global acs_state
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
@@ -37,7 +37,7 @@ def acs_inactive(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[0]
-    controller_servo.servo_throttle(controller_servo.STOP)
+    controller_servo.servo_throttle(controller_servo.STOP, manager)
     manager.update_field('ACS_state',acs_state)
 
 
@@ -47,7 +47,7 @@ def acs_armed(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
-    controller_servo.servo_throttle(controller_servo.STOP)
+    controller_servo.servo_throttle(controller_servo.STOP, manager)
     manager.update_field('ACS_state',acs_state)
 
 def acs_active(manager: Data_Manager):
@@ -55,7 +55,7 @@ def acs_active(manager: Data_Manager):
     This function calls the PID control algorithm to actuate the servo
     '''
     # Call PID_control functions here as required
-    # controller_servo.servo_throttle(controller_servo.MAX_UP)
+    # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
     acs_state = acs_states[2] # ACS_Active
     manager.update_field('ACS_state',acs_state)
@@ -65,6 +65,7 @@ def acs_active_MAX(manager: Data_Manager):
     This function bypasses the PID control algorithm to actuate the servo to its Maximum value
     '''
     # Call required controller_servo function (100% actuation) directly here
+    # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
     acs_state = acs_state[3] # ACS_Active_MAX
     manager.update_field('ACS_state',acs_state)
@@ -74,5 +75,6 @@ def acs_FAILURE(manager: Data_Manager):
     This function is a failure mode. It only activates in case of a fatal error (and logs the same).
     '''
     global acs_state
+    # controller_servo.servo_throttle(controller_servo.STOP, manager)
     acs_state = acs_state[-1] # ACS_Failure mode
     manager.update_field('ACS_state',acs_state)
