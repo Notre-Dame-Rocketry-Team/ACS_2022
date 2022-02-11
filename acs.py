@@ -10,7 +10,6 @@ With contributions from Patrick Faley and other ACS squad members
 import time
 import traceback
 import data_filter
-import controller_servo
 import scribe
 import sensors
 import state
@@ -53,13 +52,12 @@ if __name__ == '__main__':
     while True:
         try:
             print('--- Beginning Cycle ---')
-            print(f"KALMAN ACCELERATION: {data_filter.a}")#
             # Read sensors (unfiltered)
             t1 = time.time()
             # data = sensors.read_sensors(sensors)
             sensors.read_sensors(manager)
             count += 1#
-            print(f"Loop Count: {count}")
+            print(f"Cycle Count: {count}")
             t2 = time.time()
             print(f'Total Sensor Read Time: {t2 - t1}s')
 
