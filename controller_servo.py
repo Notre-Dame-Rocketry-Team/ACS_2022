@@ -15,6 +15,7 @@ import RPi.GPIO as GPIO
 
 # CONSTANTS
 CONTROLLER_PIN = 5
+STOP = 0.15 # Use this for servo.throttle() to stop the motor
 
 # Global Constants defined in functions
 kit = None
@@ -60,17 +61,16 @@ try:
     init_servo()
     while True:
         GPIO.output(23, 0)
-        servo_throttle(0.15)
+        servo_throttle(-1)
         time.sleep(5)
-        #servo_throttle(-1)
-        #time.sleep(5)
-        #servo_throttle(0)
+        servo_throttle(1)
+        time.sleep(7)
+        servo_throttle(STOP)
+        time.sleep(5)
         #GPIO.output(23,1)
-        #time.sleep(5)
 except KeyboardInterrupt:
+    servo_throttle(STOP)
+    servo_throttle(STOP)
+    servo_throttle(STOP)
     GPIO.output(23, 1)
-    servo_throttle(0)
-    servo_throttle(0)
-    servo_throttle(0)
-
 
