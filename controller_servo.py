@@ -56,14 +56,22 @@ def servo_throttle(throttle):#manager: Data_Manager
 
 # TESTING
 try:
-    init_servo()
     init_controller()
+    init_servo()
     while True:
+<<<<<<< HEAD
         GPIO.output(23, 0)
         servo_throttle(1)
         time.sleep(5)
         servo_throttle(-1)
         time.sleep(5)
+=======
+#servo_throttle(1)
+#time.sleep(5)
+#servo_throttle(-1)
+#time.sleep(5)
+        servo_throttle(0)
+>>>>>>> 3a8662592ea61b559688d7a989ca7459f122f71d
 except KeyboardInterrupt:
     GPIO.output(23, 0)
     servo_throttle(0)
