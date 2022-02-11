@@ -11,6 +11,7 @@ import time
 from adafruit_servokit import ServoKit
 import data_manager
 from data_manager import Data_Manager
+import RPi.GPIO as GPIO
 
 # CONSTANTS
 CONTROLLER_PIN = 5
@@ -25,6 +26,8 @@ def init_controller():
     '''
     global kit
     kit = ServoKit(channels=16)
+    GPIO.setmode(GPIO.BCM) # Initialize GPIO
+    GPIO.setup(23, GPIO.OUT, initial=1)
     return True
 
 def init_servo():# manager: Data_Manager
@@ -56,12 +59,13 @@ try:
     init_servo()
     init_controller()
     while True:
-#servo_throttle(1)
-#time.sleep(5)
-#servo_throttle(-1)
-#time.sleep(5)
+        GPIO.output(23, 0)
+        servo_throttle(1)
+        time.sleep(5)
         servo_throttle(-1)
+        time.sleep(5)
 except KeyboardInterrupt:
+    GPIO.output(23, 0)
     servo_throttle(0)
     servo_throttle(0)
     servo_throttle(0)
