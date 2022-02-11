@@ -60,15 +60,13 @@ try:
     init_servo()
     while True:
         GPIO.output(23, 0)
-        servo_throttle(1)
+        servo_throttle(0.15)
         time.sleep(5)
         #servo_throttle(-1)
         #time.sleep(5)
-#servo_throttle(1)
-#time.sleep(5)
-#servo_throttle(-1)
-#time.sleep(5)
         #servo_throttle(0)
+        #GPIO.output(23,1)
+        #time.sleep(5)
 except KeyboardInterrupt:
     GPIO.output(23, 1)
     servo_throttle(0)
