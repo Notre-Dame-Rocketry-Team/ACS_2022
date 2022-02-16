@@ -68,11 +68,11 @@ def acs_active(manager: Data_Manager):
         controller_servo.servo_up(manager)
         print("SERVO TIMER START/SERVO UP")
         print(time.time()-acs_timer_start)
-    elif time.time()-acs_timer_start >= 5:
+    elif (time.time()-acs_timer_start >= 5) and (controller_servo.servo.throttle != controller_servo.MAX_DOWN):
         print("SERVO DOWN")
         controller_servo.servo_down(manager)
         print(time.time()-acs_timer_start)
-    elif time.time()-acs_timer_start >= 7:
+    elif (time.time()-acs_timer_start >= 7) and (controller_servo.servo.throttle != controller_servo.STOP):
         print("SERVO STOP")
         controller_servo.servo_stop(manager)
         print(time.time()-acs_timer_start)
