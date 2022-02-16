@@ -11,6 +11,6 @@ kit = ServoKit(channels=16)
 servo = kit.continuous_servo[CONTROLLER_PIN]
 
 
-while True:
-    servo.throttle = float(sys.argv[1])
+
+servo.throttle = float(sys.argv[1])
 
