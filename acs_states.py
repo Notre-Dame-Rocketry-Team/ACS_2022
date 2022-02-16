@@ -66,10 +66,16 @@ def acs_active(manager: Data_Manager):
     if acs_timer_start == None:
         acs_timer_start = time.time()
         controller_servo.servo_up(manager)
+        print("SERVO TIMER START/SERVO UP")
+        print(time.time()-acs_timer_start)
     elif time.time()-acs_timer_start >= 5:
+        print("SERVO DOWN")
         controller_servo.servo_down(manager)
-    elif time.time()-acs_timer_start >= 10:
+        print(time.time()-acs_timer_start)
+    elif time.time()-acs_timer_start >= 7:
+        print("SERVO STOP")
         controller_servo.servo_stop(manager)
+        print(time.time()-acs_timer_start)
 
     acs_state = acs_states[2] # ACS_Active
     manager.update_field('ACS_state',acs_state)
