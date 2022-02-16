@@ -12,5 +12,5 @@ servo = kit.continuous_servo[CONTROLLER_PIN]
 
 
 while True:
-    servo.throttle = 0.15
+    servo.throttle = float(sys.argv[1])
 
