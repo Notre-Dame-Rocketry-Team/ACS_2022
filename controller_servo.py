@@ -6,6 +6,7 @@ the servo, and to actuate the servo motor.
 
 # Imports
 import time
+from tkinter.tix import MAX
 from adafruit_servokit import ServoKit
 import data_manager
 from data_manager import Data_Manager
@@ -52,6 +53,15 @@ def servo_throttle(throttle, manager: Data_Manager):
     manager.update_field('servo_Throttle', throttle)
     #print(f"Servo Throttle: {throttle} = {throttle * 100}%") # Only for testing
     return throttle
+
+def servo_up(manager: Data_Manager):
+    return servo_throttle(MAX_UP,manager)
+
+def servo_down(manager: Data_Manager):
+    return servo_throttle(MAX_DOWN,manager)
+
+def servo_stop(manager: Data_Manager):
+    return servo_throttle(STOP,manager)
 
 # TESTING
 '''

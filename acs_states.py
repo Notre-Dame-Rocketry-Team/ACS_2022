@@ -4,6 +4,7 @@ This program defines the possible
 ACS States as part of the control algorithm.
 '''
 # Imports
+import time
 import controller_servo
 # import PID_control
 import data_manager
@@ -17,6 +18,7 @@ acs_states = [
     'ACS_Failure'
 ]
 acs_state = ''
+acs_timer_start = None
 # ACS Functions
 def init_acs_state(manager: Data_Manager) -> bool:
     '''
@@ -25,7 +27,9 @@ def init_acs_state(manager: Data_Manager) -> bool:
     controller_servo.init_controller()
     controller_servo.init_servo(manager)
     controller_servo.servo_throttle(controller_servo.STOP, manager)
+    global acs_timer_start
     global acs_state
+    acs_timer_start = None
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
     acs_state = acs_states[0] # ACS_Inactive
@@ -56,7 +60,17 @@ def acs_active(manager: Data_Manager):
     '''
     # Call PID_control functions here as required
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
+    dt = time.time()-acs_timer_start
+    global acs_timer_start
     global acs_state
+    if acs_timer_start == None:
+        acs_timer_start = time.time()
+        controller_servo.servo_up(manager)
+    elif dt >= 15:
+        controller_servo.servo_down(manager)
+    elif dt >= 30:
+        controller_servo.servo_stop(manager)
+
     acs_state = acs_states[2] # ACS_Active
     manager.update_field('ACS_state',acs_state)
 
