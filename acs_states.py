@@ -62,13 +62,13 @@ def acs_active(manager: Data_Manager):
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_timer_start
     global acs_state
-    dt = time.time()-acs_timer_start
+    
     if acs_timer_start == None:
         acs_timer_start = time.time()
         controller_servo.servo_up(manager)
-    elif dt >= 15:
+    elif time.time()-acs_timer_start >= 15:
         controller_servo.servo_down(manager)
-    elif dt >= 30:
+    elif time.time()-acs_timer_start >= 30:
         controller_servo.servo_stop(manager)
 
     acs_state = acs_states[2] # ACS_Active
