@@ -60,9 +60,9 @@ def acs_active(manager: Data_Manager):
     '''
     # Call PID_control functions here as required
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
-    dt = time.time()-acs_timer_start
     global acs_timer_start
     global acs_state
+    dt = time.time()-acs_timer_start
     if acs_timer_start == None:
         acs_timer_start = time.time()
         controller_servo.servo_up(manager)
