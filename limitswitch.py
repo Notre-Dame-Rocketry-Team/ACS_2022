@@ -20,7 +20,7 @@ import time
 
 gpio.setup(1, gpio.IN, pull_up_down=GPIO.PUD_DOWN)
 
-while(True)
+while(True):
     if gpio.input(17)==0:
         print("limit switch actuated"+gpio.input(17))
     else:
