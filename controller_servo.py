@@ -10,6 +10,11 @@ from tkinter.tix import MAX
 from adafruit_servokit import ServoKit
 import data_manager
 from data_manager import Data_Manager
+import RPi.GPIO as gpio
+# Initialize the Limit Switches
+gpio.setmode(gpio.BCM)
+gpio.setup(17, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+gpio.setup(27, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 
 # CONSTANTS
 CONTROLLER_PIN = 5
@@ -62,6 +67,7 @@ def servo_down(manager: Data_Manager):
 
 def servo_stop(manager: Data_Manager):
     return servo_throttle(STOP,manager)
+
 
 # TESTING
 '''
