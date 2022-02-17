@@ -75,6 +75,8 @@ def acs_active(manager: Data_Manager):
     elif (time.time()-acs_timer_start >= 7) and (controller_servo.servo.throttle != controller_servo.STOP):
         print("SERVO STOP")
         controller_servo.servo_stop(manager)
+        time.sleep(1)
+
         print(time.time()-acs_timer_start)
 
     acs_state = acs_states[2] # ACS_Active
