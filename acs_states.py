@@ -1,5 +1,6 @@
 '''
 Author: Daniel Noronha
+With contributions from Hector Juarez
 This program defines the possible
 ACS States as part of the control algorithm.
 '''

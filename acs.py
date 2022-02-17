@@ -4,7 +4,7 @@ continually read data from sensors, filter it,
 and write output. It will also call functions to
 change the current vehicle state and acs state.
 Author: Daniel Noronha
-With contributions from Patrick Faley and other ACS squad members
+With contributions from Patrick Faley and Hector Juarez
 """
 # Import libraries
 import time
