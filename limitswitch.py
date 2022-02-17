@@ -18,11 +18,12 @@ import time
 #pull_up_down parameter assumes the default state is 0V, change to PUD_UP if it isnt
 #https://raspberrypi.stackexchange.com/questions/27263/change-the-gpio-pull-up-down-gpio-pud-up-to-gpio-pud-down
 
-gpio.setup(1, gpio.IN, pull_up_down=GPIO.PUD_DOWN)
+gpio.setmode(gpio.BCM)
+gpio.setup(27, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 
 while(True):
-    if gpio.input(17)==0:
-        print("limit switch actuated"+gpio.input(17))
+    if gpio.input(27)==0:
+        print(f"limit switch not actuated {gpio.input(27)}")
     else:
-        print("limit switch not actuated"+gpio.input(17))
+        print(f"limit switch actuated {gpio.input(27)}")
     time.sleep(1)
