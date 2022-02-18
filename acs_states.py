@@ -81,7 +81,7 @@ def acs_active(manager: Data_Manager):
         controller_servo.servo_down(manager)
 
     elif (time.time()-acs_timer_start >= 10) and (controller_servo.servo.throttle != controller_servo.MAX_DOWN):
-        controller_servo.servo_up(manager)
+        controller_servo.servo_down(manager)
 
 
 
