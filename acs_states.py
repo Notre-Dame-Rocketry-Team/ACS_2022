@@ -59,7 +59,7 @@ def acs_inactive(manager: Data_Manager):
     if controller_servo.servo.throttle != controller_servo.STOP:
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
-        pass
+        manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
 
@@ -72,7 +72,7 @@ def acs_armed(manager: Data_Manager):
     if controller_servo.servo.throttle != controller_servo.STOP:
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
-        pass
+        manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
 def acs_active(manager: Data_Manager):
@@ -102,7 +102,7 @@ def acs_active(manager: Data_Manager):
     elif (time.time()-acs_timer_start >= 15) and (controller_servo.servo.throttle == controller_servo.MAX_UP) and (sw_timer_start == None):
         controller_servo.servo_down(manager)
     else:
-        pass
+        manager.update_field('servo_Throttle', controller_servo.servo.throttle)
         
 
     acs_state = acs_states[2] # ACS_Active
@@ -116,6 +116,7 @@ def acs_active_MAX(manager: Data_Manager):
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
     acs_state = acs_state[3] # ACS_Active_MAX
+    manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
 def acs_FAILURE(manager: Data_Manager):
