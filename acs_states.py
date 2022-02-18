@@ -73,7 +73,7 @@ def acs_active(manager: Data_Manager):
     elif (sw_timer_start == None) and (controller_servo.gpio.input(17) == 1):
         sw_timer_start = time.time()
         controller_servo.servo_up(manager)
-    elif (time.time() - sw_timer_start >= 0.5):
+    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 0.5):
         controller_servo.servo_stop(manager)
         sw_timer_start = None
     elif acs_timer_start == None:
