@@ -7,6 +7,7 @@ libraries are required.
 # Import libraries
 import data_manager
 from data_manager import Data_Manager
+from acs import FAKE_DATA
 import numpy as np
 import matplotlib.pyplot as plt
 # import openpyxl
@@ -94,13 +95,16 @@ def get_dt(in_time):
     return dt
 
 def transform_LIS(in_accel):
-    out_accel = float(in_accel[2])#-9.5244
+    out_accel = float(in_accel[3])#-9.5244
     #print(f'ADXL: {in_accel[2]}, {out_accel}')
     return out_accel
 
 def transform_ICM(in_accel):
     #out_accel = g*(float(in_accel[2]))-0.53
-    out_accel = (float(in_accel[0]))-9.795813967536112
+    if FAKE_DATA:
+        out_accel = (float(in_accel[3]))# + 9.80665?
+    else:
+        out_accel = (float(in_accel[0]))-9.795813967536112
     #print(f'MPU: {in_accel[2]}, {out_accel}')
     return out_accel
 

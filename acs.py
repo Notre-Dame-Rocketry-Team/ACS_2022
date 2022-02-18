@@ -6,12 +6,16 @@ change the current vehicle state and acs state.
 Author: Daniel Noronha
 With contributions from Patrick Faley and Hector Juarez
 """
+
+FAKE_DATA = False
+fake_path = ''
+
 # Import libraries
 import time
 import traceback
 import data_filter
 import scribe
-import sensors
+# import sensors
 import state
 import acs_states
 import beep
@@ -31,7 +35,13 @@ if __name__ == '__main__':
     # Initialize Data Manager
     manager = Data_Manager(active_sensors)
     # Initialize Sensors
-    sensors.initialize_sensors(manager)
+    # Check if using Fake Data
+    if FAKE_DATA:
+        import sensors_spoof as sensors
+        sensors.initialize_sensors(fake_path, manager)
+    else:
+        import sensors
+        sensors.initialize_sensors(manager)
     # Initialize Kalman Filter
     data_filter.initialize_filter(manager)
     # Initialize the Launch Vehicle state (OnGround)
@@ -120,52 +130,3 @@ if __name__ == '__main__':
                 time.sleep(0.5)
             break
 
-
-# Initialize sensors
-# sensors, labels = initialize_sensors()
-#INIT_FUNCTIONS = [sensors.init_time,
-#                  sensors.init_imu,
-#                   sensors.init_accelerometer,
-#                   sensors.init_altimeter]
-# READ_FUNCTIONS = [sensors.read_time,
-#                   sensors.read_imu,
-#                   sensors.read_accelerometer,
-#                   sensors.read_altimeter]
-
-# DEPRECATED - Initialize sensors defined in sensors.py itself
-# def initialize_sensors():
-#     """
-#     This function calls all of the functions specified in
-#     INIT_FUNCTIONS to initialize all of the sensors.
-#     The output from a function in INIT_FUNCTIONS should
-#     be of the following form:
-
-#     Outputs: objects - list of sensor objects
-#              labels - list of string labels for sensors
-#     """
-
-#     # Run all the functions
-#     out = [f() for f in INIT_FUNCTIONS]
-
-#     # Break it apart
-#     objects, labels = utils.unzip_list(out)
-#     labels = utils.unroll_list(labels)
-
-#     return objects, labels
-# DEPRECATED - Read sensors defined in sensors.py itself
-# def read_sensors(sensors):
-#     """
-#     This function calls all of the functions specified in
-#     READ_FUNCTIONS to read data from all sensors.
-#     The output should be a list of all of the sensor data,
-#     in the order of the label output from `initialize_sensors`
-
-#     Inputs: sensors - list of sensor objects
-#     Outputs: data - list of floats with sensor data
-#     """
-
-#     # Run all the functions
-#     data = [f(obj) for f, obj in zip(READ_FUNCTIONS, sensors)]
-#     data = utils.unroll_list(data)
-
-#     return data
