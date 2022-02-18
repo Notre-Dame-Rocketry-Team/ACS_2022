@@ -31,12 +31,22 @@ def init_acs_state(manager: Data_Manager) -> bool:
     '''
     controller_servo.init_controller()
     controller_servo.init_servo(manager)
-    controller_servo.servo_throttle(controller_servo.STOP, manager)
+    controller_servo.servo_stop(manager)
     global acs_timer_start
     global acs_state
     acs_timer_start = None
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
+    # Initialize the flap position so that flaps are fully retracted
+    while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 0:
+        if controller_servo.servo.throttle != controller_servo.MAX_DOWN:
+            controller_servo.servo_down(manager)
+        else:
+            continue
+    controller_servo.servo_up(manager)
+    time.sleep(1)
+    controller_servo.servo_stop(manager)
+
     acs_state = acs_states[0] # ACS_Inactive
     return True
 
@@ -46,7 +56,10 @@ def acs_inactive(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[0]
-    controller_servo.servo_throttle(controller_servo.STOP, manager)
+    if controller_servo.servo.throttle != controller_servo.STOP:
+        controller_servo.servo_throttle(controller_servo.STOP, manager)
+    else:
+        pass
     manager.update_field('ACS_state',acs_state)
 
 
@@ -56,7 +69,10 @@ def acs_armed(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
-    controller_servo.servo_throttle(controller_servo.STOP, manager)
+    if controller_servo.servo.throttle != controller_servo.STOP:
+        controller_servo.servo_throttle(controller_servo.STOP, manager)
+    else:
+        pass
     manager.update_field('ACS_state',acs_state)
 
 def acs_active(manager: Data_Manager):
@@ -76,16 +92,17 @@ def acs_active(manager: Data_Manager):
     elif (sw_timer_start == None) and (controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1):
         sw_timer_start = time.time()
         controller_servo.servo_down(manager)
-    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 0.5) and (controller_servo.servo.throttle != controller_servo.STOP):
+    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 1):
         controller_servo.servo_stop(manager)
         sw_timer_start = None
-    elif acs_timer_start == None:
+    elif (acs_timer_start == None) and (sw_timer_start == None):
         acs_timer_start = time.time()
-        controller_servo.servo_down(manager)
+        controller_servo.servo_up(manager)
 
-    elif (time.time()-acs_timer_start >= 10) and (controller_servo.servo.throttle != controller_servo.MAX_DOWN):
+    elif (time.time()-acs_timer_start >= 15) and (controller_servo.servo.throttle == controller_servo.MAX_UP) and (sw_timer_start == None):
         controller_servo.servo_down(manager)
-        acs_timer_start = None
+    else:
+        pass
         
 
     acs_state = acs_states[2] # ACS_Active
