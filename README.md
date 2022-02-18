@@ -8,7 +8,7 @@ Team (NDRT) Apogee Control System (ACS).
 | Sensor Type   | Chosen Sensor |
 | ------------- | ------------- |
 | Altimeter     | BMP390        |
-| Accelerometer | ADXL377       |
+| Accelerometer | H3LIS200DL    |
 | IMU           | ICM-20948     |
 
 ## Subscale Components
