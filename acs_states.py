@@ -65,10 +65,12 @@ def acs_active(manager: Data_Manager):
     global acs_timer_start
     global acs_state
     global sw_timer_start
-    if (sw_timer_start == None) and (controller_servo.gpio.input(17) == 1):
+    
+    #modified initial movement for testing
+    if (sw_timer_start == None) and (controller_servo.gpio.input(27) == 1):
         sw_timer_start = time.time()
-        controller_servo.servo_down(manager)
-    elif (sw_timer_start == None) and (controller_servo.gpio.input(27) == 1):
+        controller_servo.servo_up(manager)
+    elif (sw_timer_start == None) and (controller_servo.gpio.input(17) == 1):
         sw_timer_start = time.time()
         controller_servo.servo_up(manager)
     elif (time.time() - sw_timer_start >= 0.5):
@@ -76,10 +78,10 @@ def acs_active(manager: Data_Manager):
         sw_timer_start = None
     elif acs_timer_start == None:
         acs_timer_start = time.time()
-        controller_servo.servo_up(manager)
+        controller_servo.servo_down(manager)
 
     elif (time.time()-acs_timer_start >= 10) and (controller_servo.servo.throttle != controller_servo.MAX_DOWN):
-        controller_servo.servo_down(manager)
+        controller_servo.servo_up(manager)
 
 
 
