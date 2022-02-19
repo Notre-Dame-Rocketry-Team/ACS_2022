@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 # If OnGround (reported 5 times consequtively)
             if  (len(current_state_lst) == MAX_OLD_STATE):
                 if (current_state == state.states[0]) and (all(i == current_state_lst[0] for i in current_state_lst)):
-                    acs_states.acs_active(manager) # ACS Inactive
+                    acs_states.acs_inactive(manager) # ACS Inactive
                 # If PoweredAscent (reported 5 times consequtively)
                 elif (current_state == state.states[1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
                     acs_states.acs_armed(manager) # ACS Armed
