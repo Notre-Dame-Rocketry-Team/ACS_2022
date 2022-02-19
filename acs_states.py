@@ -116,7 +116,7 @@ def acs_active_MAX(manager: Data_Manager):
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
     acs_state = acs_state[3] # ACS_Active_MAX
-    manager.update_field('servo_Throttle', controller_servo.servo.throttle)
+    controller_servo.servo_stop(manager)
     manager.update_field('ACS_state',acs_state)
 
 def acs_FAILURE(manager: Data_Manager):
