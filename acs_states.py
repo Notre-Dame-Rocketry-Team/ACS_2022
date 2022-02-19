@@ -103,6 +103,8 @@ def acs_active(manager: Data_Manager):
         controller_servo.servo_down(manager)
     else:
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
+    if acs_timer_start != None:
+        print(time.time() - acs_timer_start)
         
 
     acs_state = acs_states[2] # ACS_Active
