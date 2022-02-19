@@ -50,6 +50,7 @@ def state_transition(manager: Data_Manager):
     acceleration = manager.read_field('Kalman_acceleration').get_value()
     print(f"Kalman Altitude: {altitude}")
     print(f"Kalman Acceleration: {acceleration}")
+    print(f"State: {state == states[0]}")
     # OnGround state => PoweredAscent state
     if (state == states[0]) and ((altitude >= LAUNCH_ALT) or (acceleration >= LAUNCH_ACCEL)):
         next_state = states[1]
