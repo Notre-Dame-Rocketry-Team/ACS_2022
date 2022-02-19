@@ -18,7 +18,7 @@ states = [
 ]
 state = ''
 # Sensor State Constants
-LAUNCH_ACCEL = 40 # m/s^2
+LAUNCH_ACCEL = 20 # m/s^2
 LAUNCH_ALT = 60 # m
 BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
