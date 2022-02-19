@@ -44,7 +44,7 @@ def init_acs_state(manager: Data_Manager) -> bool:
         else:
             continue
     controller_servo.servo_up(manager)
-    time.sleep(1)
+    time.sleep(2)
     controller_servo.servo_stop(manager)
 
     acs_state = acs_states[0] # ACS_Inactive
@@ -92,7 +92,7 @@ def acs_active(manager: Data_Manager):
     elif (sw_timer_start == None) and (controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1):
         sw_timer_start = time.time()
         controller_servo.servo_down(manager)
-    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 1):
+    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 2):
         controller_servo.servo_stop(manager)
         # sw_timer_start = None
     elif (acs_timer_start == None) and (sw_timer_start == None):
