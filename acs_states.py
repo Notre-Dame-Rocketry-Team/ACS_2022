@@ -94,7 +94,7 @@ def acs_active(manager: Data_Manager):
         controller_servo.servo_down(manager)
     elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 1):
         controller_servo.servo_stop(manager)
-        sw_timer_start = None
+        # sw_timer_start = None
     elif (acs_timer_start == None) and (sw_timer_start == None):
         acs_timer_start = time.time()
         controller_servo.servo_up(manager)
