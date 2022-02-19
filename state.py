@@ -22,7 +22,7 @@ LAUNCH_ACCEL = 20 # m/s^2
 LAUNCH_ALT = 60 # m
 BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
-APOGEE_VELOCITY = 0 # m/s
+APOGEE_VELOCITY = -5 # m/s
 APOGEE_ALT = 1463 # m (4800ft)
 CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
 
