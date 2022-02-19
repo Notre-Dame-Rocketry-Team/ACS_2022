@@ -49,7 +49,7 @@ def state_transition(manager: Data_Manager):
     velocity = manager.read_field('Kalman_velocity').get_value()
     acceleration = manager.read_field('Kalman_acceleration').get_value()
     # OnGround state => PoweredAscent state
-    if (state == states[0]) and ((altitude >= LAUNCH_ALT) and (acceleration >= LAUNCH_ACCEL)):
+    if (state == states[0]) and ((altitude >= LAUNCH_ALT) or (acceleration >= LAUNCH_ACCEL)):
         next_state = states[1]
     # PoweredAscent state => Burnout state
     elif (state == states[1]) and ((altitude < APOGEE_ALT) and (acceleration <= BURNOUT_ACCEL)): # No chance of burnout AFTER desired apogee right?
