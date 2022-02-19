@@ -39,7 +39,7 @@ def init_acs_state(manager: Data_Manager) -> bool:
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
     # Initialize the flap position so that flaps are fully retracted
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 0:
-        if controller_servo.servo.throttle != controller_servo.MAX_DOWN:
+        if int(controller_servo.servo.throttle) != controller_servo.MAX_DOWN:
             controller_servo.servo_down(manager)
         else:
             continue
@@ -56,7 +56,7 @@ def acs_inactive(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[0]
-    if controller_servo.servo.throttle != controller_servo.STOP:
+    if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
@@ -69,7 +69,7 @@ def acs_armed(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
-    if controller_servo.servo.throttle != controller_servo.STOP:
+    if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
