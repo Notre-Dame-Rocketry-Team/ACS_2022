@@ -70,8 +70,8 @@ def state_transition(manager: Data_Manager):
         next_state = states[-1]
         t_apogee = time.time()
     # Apogee state => OnGround state (after remaining in Apogee state for CYCLE_DELAY minutes)
-    elif (state == states[-1]) and ((time.time() - t_apogee) > CYCLE_DELAY):
-        next_state = state[0]
+    #elif (state == states[-1]) and ((time.time() - t_apogee) > CYCLE_DELAY):
+        #next_state = state[0]
     else:
     # If no condition is met, remain in the current state (so we can loop and try again)
         next_state = state
