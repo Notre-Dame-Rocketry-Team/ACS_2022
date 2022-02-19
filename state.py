@@ -18,8 +18,8 @@ states = [
 ]
 state = ''
 # Sensor State Constants
-LAUNCH_ACCEL = 20 # m/s^2
-LAUNCH_ALT = 60 # m
+LAUNCH_ACCEL = 40 # m/s^2
+LAUNCH_ALT = 50 # m
 BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
 APOGEE_VELOCITY = -5 # m/s
@@ -50,7 +50,7 @@ def state_transition(manager: Data_Manager):
     acceleration = manager.read_field('Kalman_acceleration').get_value()
 
     # OnGround state => PoweredAscent state
-    if (state == states[0]) and ((altitude >= LAUNCH_ALT) or (acceleration >= LAUNCH_ACCEL)):
+    if (state == states[0]) and ((altitude >= LAUNCH_ALT) and (acceleration >= LAUNCH_ACCEL)):
         next_state = states[1]
     # PoweredAscent state => Burnout state
     elif (state == states[1]) and ((altitude < APOGEE_ALT) and (acceleration <= BURNOUT_ACCEL)): # No chance of burnout AFTER desired apogee right?
