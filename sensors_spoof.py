@@ -67,6 +67,7 @@ def read_imu(manager: Data_Manager):
     manager.update_field('ICM_acceleration', accel)
     manager.update_field('ICM_gyroscope', gyro_val)
     manager.update_field('ICM_magnetometer', magnet_val)
+    print(f"Acceleration: {accel}")
 
 def init_accelerometer(manager: Data_Manager, rows) -> bool:
     global acce
@@ -100,6 +101,7 @@ def read_altimeter(manager: Data_Manager):
     except:
         altitude = 0
     manager.update_field('BMP_altitude', altitude)
+    print(f"Altitude: {altitude}")
 
 def initialize_sensors(path: str, manager: Data_Manager) -> bool:
     with open(path, newline='') as f:
