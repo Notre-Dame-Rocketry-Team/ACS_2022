@@ -119,7 +119,7 @@ if __name__ == '__main__':
             t2 = time.time()
             print(f'Data Write Time: {t2 - t1}s')
             print()
-            time.sleep(0.5)
+            time.sleep(0.1)
         # Error Handling
         except Exception:
             print('Sorry, this program is experiencing a glitch :-(')
