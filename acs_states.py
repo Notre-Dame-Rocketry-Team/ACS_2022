@@ -25,7 +25,7 @@ acs_states = [
 acs_state = ''
 acs_timer_start = None
 sw_timer_start = None
-inactive_second_time = False
+
 # ACS Functions
 def init_acs_state(manager: Data_Manager) -> bool:
     '''
