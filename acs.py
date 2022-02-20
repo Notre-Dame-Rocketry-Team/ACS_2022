@@ -108,6 +108,7 @@ if __name__ == '__main__':
                 # If Apogee (reported 5 times consequtively)
                 elif (current_state == state.states[-1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
                     acs_states.acs_inactive(manager) # ACS Inactive
+                    inactive_second_time = True
             else:
                 manager.update_field('ACS_state',acs_states.acs_state)
             t2 = time.time()
