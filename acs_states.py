@@ -10,7 +10,6 @@ import controller_servo
 # import PID_control
 import data_manager
 from data_manager import Data_Manager
-from acs import inactive_second_time
 
 UPPER_LIMIT_SWITCH_PIN = 17
 LOWER_LIMIT_SWITCH_PIN = 27
@@ -65,7 +64,6 @@ def acs_inactive(manager: Data_Manager):
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     if inactive_second_time:
         init_acs_state(manager)
-        inactive_second_time = False
     manager.update_field('ACS_state',acs_state)
 
 
