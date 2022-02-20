@@ -101,7 +101,7 @@ def acs_active(manager: Data_Manager):
         acs_timer_start = time.time()
         controller_servo.servo_up(manager)
 
-    elif (time.time()-acs_timer_start >= 10) and (sw_timer_start == None) and (int(controller_servo.servo.throttle) == controller_servo.MAX_UP)):
+    elif (time.time()-acs_timer_start >= 10) and (sw_timer_start == None) and (int(controller_servo.servo.throttle) == controller_servo.MAX_UP):
         controller_servo.servo_down(manager)
     else:
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
