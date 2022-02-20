@@ -25,7 +25,7 @@ from data_manager import Data_Manager
 SAVE_PATH = './data/'
 SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
-MAX_OLD_STATE = 5 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
+MAX_OLD_STATE = 2 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
 
 if __name__ == '__main__':
     # Define Active Sensors
@@ -119,6 +119,7 @@ if __name__ == '__main__':
             t2 = time.time()
             print(f'Data Write Time: {t2 - t1}s')
             print()
+            time.sleep(0.1)
         # Error Handling
         except Exception:
             print('Sorry, this program is experiencing a glitch :-(')
