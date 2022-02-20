@@ -9,8 +9,8 @@ import time
 import controller_servo
 # import PID_control
 import data_manager
-from state import inactive_second_time
 from data_manager import Data_Manager
+from acs import inactive_second_time
 
 UPPER_LIMIT_SWITCH_PIN = 17
 LOWER_LIMIT_SWITCH_PIN = 27
@@ -25,6 +25,7 @@ acs_states = [
 acs_state = ''
 acs_timer_start = None
 sw_timer_start = None
+inactive_second_time = False
 # ACS Functions
 def init_acs_state(manager: Data_Manager) -> bool:
     '''
