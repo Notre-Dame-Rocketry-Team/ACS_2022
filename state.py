@@ -16,7 +16,7 @@ states = [
     'Overshoot',
     'Apogee'
 ]
-inactive_second_time = False
+
 state = ''
 # Sensor State Constants
 LAUNCH_ACCEL = 50 # m/s^2
@@ -63,12 +63,10 @@ def state_transition(manager: Data_Manager):
     # Burnout state => Apogee state (Option 2) - no overshooting
     elif (state == states[2]) and ((altitude <= APOGEE_ALT) and (velocity < APOGEE_VELOCITY)):
         next_state = states[-1]
-        inactive_second_time = True
         t_apogee = time.time()
     # Overshoot state => Apogee state
     elif (state == states[3]) and ((altitude > APOGEE_ALT) and (velocity < APOGEE_VELOCITY)):
         next_state = states[-1]
-        inactive_second_time = True
         t_apogee = time.time()
     # Apogee state => OnGround state (after remaining in Apogee state for CYCLE_DELAY minutes)
     #elif (state == states[-1]) and ((time.time() - t_apogee) > CYCLE_DELAY):
