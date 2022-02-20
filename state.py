@@ -6,6 +6,7 @@ of the launch vehicle using Kalman-filtered data.
 # Import Libraries
 import time
 import data_manager
+import acs_states
 from data_manager import Data_Manager
 
 # State Value Constants
@@ -25,7 +26,7 @@ BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
 APOGEE_VELOCITY = -5 # m/s
 APOGEE_ALT = 1463 # m (4800ft)
-CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
+#CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
 
 # Functions
 def init_state(manager: Data_Manager):
@@ -45,7 +46,6 @@ def state_transition(manager: Data_Manager):
     '''
     global state
     global inactive_second_time
-    t_apogee = None # This declaration is not required (only included to suppress syntax error highlighting).
     # Read in data from manager
     altitude = manager.read_field('Kalman_altitude').get_value()
     velocity = manager.read_field('Kalman_velocity').get_value()
@@ -69,8 +69,10 @@ def state_transition(manager: Data_Manager):
         next_state = states[-1]
         t_apogee = time.time()
     # Apogee state => OnGround state (after remaining in Apogee state for CYCLE_DELAY minutes)
-    #elif (state == states[-1]) and ((time.time() - t_apogee) > CYCLE_DELAY):
-        #next_state = state[0]
+    elif (state == states[-1]):
+        next_state = state[0]
+        acs_states.init_acs_state(manager)
+        
     else:
     # If no condition is met, remain in the current state (so we can loop and try again)
         next_state = state
