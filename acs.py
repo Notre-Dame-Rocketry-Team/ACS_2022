@@ -25,7 +25,7 @@ from data_manager import Data_Manager
 SAVE_PATH = './data/'
 SAVE_NAME = 'data'
 SAVE_SUFFIX = '.csv'
-MAX_OLD_STATE = 1 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
+MAX_OLD_STATE = 5 # How many times should the same state be reported consequtively before ACS state is updated accordingly?
 
 if __name__ == '__main__':
     # Define Active Sensors
