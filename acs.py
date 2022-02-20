@@ -7,7 +7,7 @@ Author: Daniel Noronha
 With contributions from Patrick Faley and Hector Juarez
 """
 
-FAKE_DATA = True
+FAKE_DATA = False
 fake_path = 'data_subscale_11_20_launch1.csv'
 
 # Import libraries
