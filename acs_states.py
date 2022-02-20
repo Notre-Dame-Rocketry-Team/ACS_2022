@@ -62,8 +62,6 @@ def acs_inactive(manager: Data_Manager):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
         manager.update_field('servo_Throttle', controller_servo.servo.throttle)
-    if inactive_second_time:
-        init_acs_state(manager)
     manager.update_field('ACS_state',acs_state)
 
 
