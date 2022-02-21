@@ -26,7 +26,7 @@ BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
 APOGEE_VELOCITY = -5 # m/s
 APOGEE_ALT = 1463 # m (4800ft)
-#CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
+# CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
 
 # Functions
 def init_state(manager: Data_Manager):
@@ -66,7 +66,7 @@ def state_transition(manager: Data_Manager):
     # Overshoot state => Apogee state
     elif (state == states[3]) and ((altitude > APOGEE_ALT) and (velocity < APOGEE_VELOCITY)):
         next_state = states[-1]
-    # Apogee state => OnGround state (after remaining in Apogee state for CYCLE_DELAY minutes)
+    # Apogee state => OnGround state # (after remaining in Apogee state for CYCLE_DELAY seconds)
     elif (state == states[-1]):
         next_state = state[0]
         acs_states.init_acs_state(manager)
