@@ -8,6 +8,7 @@ With contributions from Patrick Faley and Hector Juarez
 """
 
 FAKE_DATA = False
+FAKE_DATA_SAMPLE_RATE = 10 #Hz
 fake_path = 'data_subscale_11_20_launch1.csv'
 
 # Import libraries
@@ -121,7 +122,7 @@ if __name__ == '__main__':
             print(f'Data Write Time: {t2 - t1}s')
             print()
             if FAKE_DATA:
-                time.sleep(0.1)
+                time.sleep(1/FAKE_DATA_SAMPLE_RATE)
         # Error Handling
         except Exception:
             print('Sorry, this program is experiencing a glitch :-(')
