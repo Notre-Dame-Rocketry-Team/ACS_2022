@@ -56,7 +56,6 @@ def acs_inactive(manager: Data_Manager):
     This function applies HIGH voltage to OE pin to disable servo outputs when ACS is inactive.
     '''
     global acs_state
-    global inactive_second_time
     acs_state = acs_states[0]
     if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
@@ -118,7 +117,10 @@ def acs_active_MAX(manager: Data_Manager):
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
     acs_state = acs_state[3] # ACS_Active_MAX
-    controller_servo.servo_stop(manager)
+    if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+        controller_servo.servo_throttle(controller_servo.STOP, manager)
+    else:
+        manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
 def acs_FAILURE(manager: Data_Manager):
