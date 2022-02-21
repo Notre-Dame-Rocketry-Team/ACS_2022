@@ -92,9 +92,9 @@ if __name__ == '__main__':
             else:
                 current_state_lst = []
                 current_state_lst.append(current_state)
-                # If OnGround (reported 3 times consequtively)
+                # If OnGround
             if  (len(current_state_lst) == MAX_OLD_STATE):
-                if (current_state == state.states[0]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                if (current_state == state.states[0]):
                     acs_states.acs_inactive(manager) # ACS Inactive
                 # If PoweredAscent (reported 3 times consequtively)
                 elif (current_state == state.states[1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
@@ -105,8 +105,8 @@ if __name__ == '__main__':
                 # If Overshoot (reported 3 times consequtively)
                 elif (current_state == state.states[3]) and (all(i == current_state_lst[0] for i in current_state_lst)):
                     acs_states.acs_active_MAX(manager) # ACS Active MAX
-                # If Apogee (reported 3 times consequtively)
-                elif (current_state == state.states[-1]) and (all(i == current_state_lst[0] for i in current_state_lst)):
+                # If Apogee
+                elif (current_state == state.states[-1]):
                     acs_states.acs_inactive(manager) # ACS Inactive
 
             else:
