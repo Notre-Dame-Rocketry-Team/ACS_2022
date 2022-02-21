@@ -63,11 +63,9 @@ def state_transition(manager: Data_Manager):
     # Burnout state => Apogee state (Option 2) - no overshooting
     elif (state == states[2]) and ((altitude <= APOGEE_ALT) and (velocity < APOGEE_VELOCITY)):
         next_state = states[-1]
-        t_apogee = time.time()
     # Overshoot state => Apogee state
     elif (state == states[3]) and ((altitude > APOGEE_ALT) and (velocity < APOGEE_VELOCITY)):
         next_state = states[-1]
-        t_apogee = time.time()
     # Apogee state => OnGround state (after remaining in Apogee state for CYCLE_DELAY minutes)
     elif (state == states[-1]):
         next_state = state[0]
