@@ -6,8 +6,9 @@ with open("data_subscale_11_20_launch1.csv",'r') as f:
     
     for line in data:
             split_data = str(line).split(',')
-            if len(split_data) >= 3:
-                altdata.append(float(split_data[-2]))
+            if len(split_data) >= 7:
+                altdata.append(float(split_data[-6]))
             #print(line)
             #altdata.append(str(line).split(',')[-2])
-    print(max(altdata))
+    print(f"Maximum Kalman Altitude (Apogee) = {max(altdata)}m = {max(altdata) * 3.28084}ft.")
+    
