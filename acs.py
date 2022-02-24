@@ -64,6 +64,7 @@ if __name__ == '__main__':
 
     while True:
         try:
+            dsaf
             print('--- Beginning Cycle ---')
             # Read sensors (unfiltered)
             t1 = time.time()
@@ -127,6 +128,8 @@ if __name__ == '__main__':
         except Exception:
             print('Sorry, this program is experiencing a glitch :-(')
             print(traceback.format_exc())
+            with open('log.txt','w') as err_log:
+                err_log.write(traceback.format_exc())
             acs_states.acs_FAILURE(manager)
             file_p.close()
             for beeps in range(1,10):
