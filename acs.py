@@ -130,6 +130,7 @@ if __name__ == '__main__':
             print(traceback.format_exc())
             with open('log.txt','w') as err_log:
                 err_log.write(traceback.format_exc())
+                err_log.close()
             acs_states.acs_FAILURE(manager)
             file_p.close()
             for beeps in range(1,10):
