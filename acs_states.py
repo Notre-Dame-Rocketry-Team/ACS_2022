@@ -13,6 +13,7 @@ from data_manager import Data_Manager
 
 UPPER_LIMIT_SWITCH_PIN = 17
 LOWER_LIMIT_SWITCH_PIN = 27
+SERVO_DELAY = 0.05 #s
 
 acs_states = [
     'ACS_Inactive',
@@ -47,7 +48,7 @@ def init_acs_state(manager: Data_Manager) -> bool:
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
         if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
             controller_servo.servo_up(manager)
-        time.sleep(0.05)
+        time.sleep(SERVO_DELAY)
     controller_servo.servo_stop(manager)
     
     acs_state = acs_states[0] # ACS_Inactive
@@ -59,6 +60,22 @@ def acs_inactive(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[0]
+    
+    while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
+        if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
+            controller_servo.servo_up(manager)
+        time.sleep(SERVO_DELAY)
+        if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            controller_servo.servo_stop(manager)
+        time.sleep(SERVO_DELAY)
+    while controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1:
+        if int(controller_servo.servo.throttle) != controller_servo.MAX_DOWN:
+            controller_servo.servo_down(manager)
+        time.sleep(SERVO_DELAY)
+        if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            controller_servo.servo_stop(manager)
+        time.sleep(SERVO_DELAY)
+    
     if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
@@ -72,6 +89,22 @@ def acs_armed(manager: Data_Manager):
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
+    
+    while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
+        if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
+            controller_servo.servo_up(manager)
+        time.sleep(SERVO_DELAY)
+        if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            controller_servo.servo_stop(manager)
+        time.sleep(SERVO_DELAY)
+    while controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1:
+        if int(controller_servo.servo.throttle) != controller_servo.MAX_DOWN:
+            controller_servo.servo_down(manager)
+        time.sleep(SERVO_DELAY)
+        if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            controller_servo.servo_stop(manager)
+        time.sleep(SERVO_DELAY)
+        
     if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
