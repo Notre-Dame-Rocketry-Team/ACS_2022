@@ -55,7 +55,7 @@ if __name__ == '__main__':
     # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
 
-    beep.beep(2000,2) # One *beep* to verify that the code is running and all initializations are complete!
+    beep.beep(2093,2) # One *beep* to verify that the code is running and all initializations are complete!
 
     # VARIABLES
     count = 0
