@@ -34,12 +34,12 @@ if __name__ == '__main__':
     # Get filename and Create csv file (pointer)
     save_fname = scribe.find_new_name(SAVE_PATH, SAVE_NAME, SAVE_SUFFIX)
     file_p = open(save_fname, 'w', newline='')
-    # Initialize CSV
-    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
     # Initialize the Buzzer
     beep.init()
     # Initialize Data Manager
     manager = Data_Manager(active_sensors)
+    # Initialize CSV
+    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
     # Initialize Sensors
     # Check if using Fake Data
     if FAKE_DATA:
