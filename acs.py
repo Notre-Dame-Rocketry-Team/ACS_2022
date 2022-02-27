@@ -31,6 +31,11 @@ MAX_OLD_STATE = 3 # How many times should the same state be reported consequtive
 if __name__ == '__main__':
     # Define Active Sensors
     active_sensors = ['IMU', 'Altimeter']#, 'Accelerometer']
+    # Get filename and Create csv file (pointer)
+    save_fname = scribe.find_new_name(SAVE_PATH, SAVE_NAME, SAVE_SUFFIX)
+    file_p = open(save_fname, 'w', newline='')
+    # Initialize CSV
+    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
     # Initialize the Buzzer
     beep.init()
     # Initialize Data Manager
@@ -49,12 +54,6 @@ if __name__ == '__main__':
     state.init_state(manager)
     # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
-
-    # Get filename and Create csv file (pointer)
-    save_fname = scribe.find_new_name(SAVE_PATH, SAVE_NAME, SAVE_SUFFIX)
-    file_p = open(save_fname, 'w', newline='')
-    # Initialize CSV
-    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
 
     beep.beep(2000,2) # One *beep* to verify that the code is running and all initializations are complete!
 
