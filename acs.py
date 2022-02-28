@@ -38,8 +38,6 @@ if __name__ == '__main__':
     beep.init()
     # Initialize Data Manager
     manager = Data_Manager(active_sensors)
-    # Initialize CSV
-    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
     # Initialize Sensors
     # Check if using Fake Data
     if FAKE_DATA:
@@ -54,6 +52,8 @@ if __name__ == '__main__':
     state.init_state(manager)
     # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
+    # Initialize CSV
+    scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
 
     beep.beep(2093,2) # One *beep* to verify that the code is running and all initializations are complete!
 
