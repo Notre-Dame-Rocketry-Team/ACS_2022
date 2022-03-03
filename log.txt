@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "acs.py", line 107, in <module>
+    acs_states.acs_active_MAX(manager) # ACS Active MAX
+  File "/home/pi/ACS_2022/acs_states.py", line 154, in acs_active_MAX
+    acs_state = acs_state[3] # ACS_Active_MAX
+IndexError: string index out of range
