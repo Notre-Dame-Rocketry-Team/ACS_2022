@@ -151,7 +151,7 @@ def acs_active_MAX(manager: Data_Manager):
     # Call required controller_servo function (100% actuation) directly here
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
     global acs_state
-    acs_state = acs_state[3] # ACS_Active_MAX
+    acs_state = acs_states[3] # ACS_Active_MAX
     if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
         controller_servo.servo_throttle(controller_servo.STOP, manager)
     else:
