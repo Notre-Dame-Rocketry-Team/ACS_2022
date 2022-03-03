@@ -27,7 +27,10 @@ def find_new_name(SAVE_PATH, SAVE_NAME, SAVE_SUFFIX):
     z = 1 + max(numbers) if len(numbers) > 0 else 0
 
     # Step 3: Return the output file name
-    fname = SAVE_PATH + SAVE_NAME + '_' + str(z) + SAVE_SUFFIX
+    if z < 10:
+        fname = SAVE_PATH + SAVE_NAME + '_0' + str(z) + SAVE_SUFFIX
+    else:
+        fname = SAVE_PATH + SAVE_NAME + '_' + str(z) + SAVE_SUFFIX
 
     return fname
 # creates a new CSV file - modified to use csv.DictWriter() and writeheader() methods to work with Data Manager.
