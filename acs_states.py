@@ -164,5 +164,5 @@ def acs_FAILURE(manager: Data_Manager):
     '''
     global acs_state
     # controller_servo.servo_throttle(controller_servo.STOP, manager)
-    acs_state = acs_state[-1] # ACS_Failure mode
+    acs_state = acs_states[-1] # ACS_Failure mode
     manager.update_field('ACS_state',acs_state)
