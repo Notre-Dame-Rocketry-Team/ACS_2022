@@ -1,4 +1,4 @@
-with open("data/data_38.csv",'r') as f:
+with open("data_fullscale_20220301_01.csv",'r') as f:
     data = f.readlines()
     altdata = []
     #print(str(data[1]).split(',')[-2])

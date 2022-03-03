@@ -7,7 +7,6 @@ ACS States as part of the control algorithm.
 # Imports
 import time
 import controller_servo
-# import PID_control
 import data_manager
 from data_manager import Data_Manager
 
@@ -85,7 +84,7 @@ def acs_inactive(manager: Data_Manager):
 
 def acs_armed(manager: Data_Manager):
     '''
-    This function performs actions necessary to arm the ACS system
+    This function performs actions necessary to arm the ACS system.
     '''
     global acs_state
     acs_state = acs_states[1] # ACS_Armed
@@ -113,7 +112,7 @@ def acs_armed(manager: Data_Manager):
 
 def acs_active(manager: Data_Manager):
     '''
-    This function calls the PID control algorithm to actuate the servo
+    This function actuates the servo.
     '''
     # Call PID_control functions here as required
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
@@ -146,7 +145,7 @@ def acs_active(manager: Data_Manager):
 
 def acs_active_MAX(manager: Data_Manager):
     '''
-    This function bypasses the PID control algorithm to actuate the servo to its Maximum value
+    This function actuates the servo to its Maximum value.
     '''
     # Call required controller_servo function (100% actuation) directly here
     # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
