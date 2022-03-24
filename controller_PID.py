@@ -18,12 +18,15 @@ MAX_UP = -1
 MAX_DOWN = 1
 
 # Global Variables
+alpha_prev = 0
+# theta_prev = 0
 t_prev = None
 target_throttle = STOP
 # Functions
 def initialize(manager: Data_Manager):
     manager.add_data(data_manager.Scalar_Data('Projected_Apogee'))
     manager.add_data(data_manager.Scalar_Data('Apogee_Error'))
+    manager.add_data(data_manager.Scalar_Data('Alpha'))
     manager.add_data(data_manager.Scalar_Data('target_Throttle'))
 
 def get_dt(in_time):
@@ -35,6 +38,29 @@ def get_dt(in_time):
     t_prev = in_time
     return dt
 
+def get_dtheta(manager: Data_Manager):
+    global theta_prev
+    K = 0.7764 # rev/sec
+    K = K * (2*np.pi) # rad/sec
+    omega = K * (-(float(manager.read_field('servo_Throttle').get_value())) + 0.15)
+    t = float(manager.read_field('Time').get_value())
+    dt = get_dt(t)
+    dtheta = omega*dt
+    #theta = theta_prev + dtheta
+    #theta_prev = theta
+    return dtheta
+
+def get_alpha(manager: Data_Manager):#dalpha/dt
+    global alpha_prev
+    dalpha_dtheta = 2.4464 # [deg/rev]
+    dalpha_dtheta = ((dalpha_dtheta/180)*np.pi)/(2*np.pi) # [rad/rad]
+    dtheta = get_dtheta(manager)
+    dalpha = dalpha_dtheta * dtheta # [rad]
+    alpha = alpha_prev + dalpha # [rad]
+    alpha_prev = alpha
+    manager.update_field('Alpha', alpha)
+    return alpha
+
 def servo_control(manager: Data_Manager):
     t = float(manager.read_field('Time').get_value())
     dt = get_dt(t)
@@ -43,9 +69,9 @@ def servo_control(manager: Data_Manager):
     throttle = manager.read_field('servo_Throttle').get_value()
 
     c = 343  #[m/s] speed of sound
-    w_tabs = 1.71*0.0254!!!  # [in to m] tab width
-    L_max_tabs = 1.25*0.0254!!!  # [in to m] max tab length/extension  #[kg/m**3] density of air
-    M_e = 303/35.274!!!  # [oz to kg] EMPTY mass of rocket  # [m/s**2] gravity
+    w_tabs = 1.0*0.0254  # [in to m] tab width
+    L_tabs = 6.0*0.0254  # [in to m] max tab length/extension 
+    M_e = 736/35.274  # [oz to kg] EMPTY mass of rocket  # [m/s**2] gravity
     launch_angle = 0*np.pi/180 ## [degrees to radians] launch angle
     dt = 0.5  # [s] time step size
     target_apogee = 1463 # [m]
@@ -59,10 +85,11 @@ def servo_control(manager: Data_Manager):
     Vmag_R = np.sqrt(Vx_R**2 + Vy_R**2) 
     Mach = Vmag_R/c
 
-    Cd_o_tabs = !!!
-    Cd_tabs = !!!
-    A_tabs = !!!
-    Cd_rocket = !!!
+    extension = np.sin(get_alpha(manager)) * L_tabs
+    Cd_o_tabs = 10**(0.44*extension - 0.7) 
+    Cd_tabs = 1/np.sqrt(1-Mach**2)*Cd_o_tabs 
+    A_tabs = A_tabs = 4*w_tabs*(extension*L_tabs) 
+    Cd_rocket = 0.45
 
 
 
@@ -112,11 +139,11 @@ def servo_control(manager: Data_Manager):
     # elif error > 0: 
     #     throttle < 0.15  # if simulated apogee is above target, GO UP (negative throttle means go up)
     # else:
-    Kp = 0.0007!!!
+    Kp = 0.001
     target_throttle = (-(Kp * error)) + 0.15 # Offset of 0.15 because 0.15 denotes 0 (STOP)
     if target_throttle > 1:
         target_throttle = 1
-    elif target_throttle < 1:
+    elif target_throttle < -1:
         target_throttle = -1
     manager.update_field('Projected_Apogee', SimApogee)
     manager.update_field('Apogee_Error', error)
