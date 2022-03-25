@@ -36,6 +36,7 @@ def init_time(manager: Data_Manager, rows) -> bool:
 
 
 def read_time(manager: Data_Manager):
+    global times
     current_time = next(times)
     manager.update_field('Time', current_time)
 
