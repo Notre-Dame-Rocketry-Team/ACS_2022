@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
     # Initialize the PID Control Algorithm
-    controller_PID.initialize(manager)
+    # controller_PID.initialize(manager)
     # Initialize CSV
     scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
 
