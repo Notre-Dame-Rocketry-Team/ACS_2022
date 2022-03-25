@@ -116,10 +116,9 @@ def acs_active(manager: Data_Manager):
     This function actuates the servo.
     '''
     # Call PID_control functions here as required
-    # controller_servo.servo_throttle(controller_servo.MAX_UP, manager)
-    #global acs_timer_start
+    global acs_timer_start
     global acs_state
-    #global sw_timer_start
+    global sw_timer_start
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
         if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
             controller_servo.servo_up(manager)
