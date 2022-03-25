@@ -172,7 +172,7 @@ def acs_active_MAX(manager: Data_Manager):
     #    controller_servo.servo_throttle(controller_servo.STOP, manager)
     #else:
     #    manager.update_field('servo_Throttle', controller_servo.servo.throttle)
-    max_hit = 0
+    max_hit = False
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
         if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
             controller_servo.servo_up(manager)
@@ -181,22 +181,22 @@ def acs_active_MAX(manager: Data_Manager):
             controller_servo.servo_stop(manager)
         time.sleep(SERVO_DELAY)
     while controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1:
-        if (max_hit):
-            if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
-                controller_servo.servo_stop(manager)
-            continue
-
+        # if (max_hit):
+            #if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            #    controller_servo.servo_stop(manager)
+            #continue
         if int(controller_servo.servo.throttle) != controller_servo.MAX_DOWN:
-            max_hit=1;
+            max_hit=True
             controller_servo.servo_down(manager)
-        time.sleep(SERVO_DELAY)
+        time.sleep(0.5)
         if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
             controller_servo.servo_stop(manager)
         time.sleep(SERVO_DELAY)
 
-    if int(controller_servo.servo.throttle) != int(controller_servo.SERVO_UP):
+    if (int(controller_servo.servo.throttle) != int(controller_servo.SERVO_UP)) and (not max_hit):
         controller_servo.servo_up(manager)
-    
+        
+    manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
 def acs_FAILURE(manager: Data_Manager):
@@ -204,6 +204,6 @@ def acs_FAILURE(manager: Data_Manager):
     This function is a failure mode. It only activates in case of a fatal error (and logs the same).
     '''
     global acs_state
-    # controller_servo.servo_throttle(controller_servo.STOP, manager)
+    controller_servo.servo_stop(manager)
     acs_state = acs_states[-1] # ACS_Failure mode
     manager.update_field('ACS_state',acs_state)
