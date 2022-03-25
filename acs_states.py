@@ -9,7 +9,7 @@ import time
 import controller_servo
 import data_manager
 from data_manager import Data_Manager
-import controller_PID
+# import controller_PID
 
 UPPER_LIMIT_SWITCH_PIN = 17
 LOWER_LIMIT_SWITCH_PIN = 27
@@ -135,29 +135,29 @@ def acs_active(manager: Data_Manager):
             controller_servo.servo_stop(manager)
         time.sleep(SERVO_DELAY)
 
-    target_throttle = controller_PID.servo_control(manager)
-    controller_servo.servo_throttle(target_throttle, manager)
+    # target_throttle = controller_PID.servo_control(manager)
+    # controller_servo.servo_throttle(target_throttle, manager)
 
     acs_state = acs_states[2] # ACS_Active
     manager.update_field('ACS_state',acs_state)
     #modified initial movement for testing
-    #if (sw_timer_start == None) and (controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1):
-     #   sw_timer_start = time.time()
-      #  controller_servo.servo_up(manager)
-    #elif (sw_timer_start == None) and (controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1):
-     #   sw_timer_start = time.time()
-      #  controller_servo.servo_down(manager)
-    #elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 1):
-     #   controller_servo.servo_stop(manager)
-      #  sw_timer_start = None
-    #elif (acs_timer_start == None) and (sw_timer_start == None):
-     #   acs_timer_start = time.time()
-      #  controller_servo.servo_up(manager)
+    if (sw_timer_start == None) and (controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1):
+       sw_timer_start = time.time()
+       controller_servo.servo_up(manager)
+    elif (sw_timer_start == None) and (controller_servo.gpio.input(UPPER_LIMIT_SWITCH_PIN) == 1):
+        sw_timer_start = time.time()
+        controller_servo.servo_down(manager)
+    elif (sw_timer_start != None) and (time.time() - sw_timer_start >= 1):
+        controller_servo.servo_stop(manager)
+        sw_timer_start = None
+    elif (acs_timer_start == None) and (sw_timer_start == None):
+        acs_timer_start = time.time()
+        controller_servo.servo_up(manager)
 
-    #elif (time.time()-acs_timer_start >= 10) and (sw_timer_start == None) and (int(controller_servo.servo.throttle) == controller_servo.MAX_UP):
-     #   controller_servo.servo_down(manager)
-    #else:
-     #   manager.update_field('servo_Throttle', controller_servo.servo.throttle)
+    elif (time.time()-acs_timer_start >= 10) and (sw_timer_start == None) and (int(controller_servo.servo.throttle) == controller_servo.MAX_UP):
+        controller_servo.servo_down(manager)
+    else:
+        manager.update_field('servo_Throttle', controller_servo.servo.throttle)
 
 
 def acs_active_MAX(manager: Data_Manager):
