@@ -86,9 +86,9 @@ def servo_control(manager: Data_Manager):
     Mach = Vmag_R/c
 
     extension = np.sin(get_alpha(manager)) * L_tabs
-    Cd_o_tabs = 10**(0.44*extension - 0.7) 
-    Cd_tabs = 1/np.sqrt(1-Mach**2)*Cd_o_tabs 
-    A_tabs = A_tabs = 4*w_tabs*(extension*L_tabs) 
+    Cd_o_tabs = 10**(0.44*extension - 0.7)
+    Cd_tabs = 1/np.sqrt(1-Mach**2)*Cd_o_tabs
+    A_tabs = A_tabs = 4*w_tabs*(extension*L_tabs)
     Cd_rocket = 0.45
 
 
@@ -139,7 +139,7 @@ def servo_control(manager: Data_Manager):
     # elif error > 0: 
     #     throttle < 0.15  # if simulated apogee is above target, GO UP (negative throttle means go up)
     # else:
-    Kp = 0.001
+    Kp = 0.00377 # (-(Kp * error)) + 0.15 = -1 when error = 1000ft
     target_throttle = (-(Kp * error)) + 0.15 # Offset of 0.15 because 0.15 denotes 0 (STOP)
     if target_throttle > 1:
         target_throttle = 1

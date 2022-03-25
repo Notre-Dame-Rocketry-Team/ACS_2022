@@ -195,7 +195,12 @@ def acs_active_MAX(manager: Data_Manager):
 
     if (int(controller_servo.servo.throttle) != int(controller_servo.SERVO_UP)) and (not max_hit):
         controller_servo.servo_up(manager)
-        
+    elif max_hit:
+        if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
+            controller_servo.servo_stop(manager)
+    else:
+        pass
+     
     manager.update_field('servo_Throttle', controller_servo.servo.throttle)
     manager.update_field('ACS_state',acs_state)
 
