@@ -102,7 +102,7 @@ def transform_LIS(in_accel):
 def transform_ICM(in_accel):
     #out_accel = g*(float(in_accel[2]))-0.53
     if FAKE_DATA:
-        out_accel = (float(in_accel[1])) -9.795813967536112
+        out_accel = (float(in_accel[0])) -9.795813967536112
     else:
         out_accel = (float(in_accel[0]))-9.795813967536112
     #print(f'MPU: {in_accel[2]}, {out_accel}')
