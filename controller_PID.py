@@ -86,7 +86,7 @@ def servo_control(manager: Data_Manager):
     Mach = Vmag_R/c
 
     extension = np.sin(get_alpha(manager)) * L_tabs
-    Cd_o_tabs = 10**(0.44*extension - 0.7)
+    Cd_o_tabs = 1.28*extension# 10**(0.44*extension - 0.7)
     Cd_tabs = 1/np.sqrt(1-Mach**2)*Cd_o_tabs
     A_tabs = A_tabs = 4*w_tabs*(extension*L_tabs)
     Cd_rocket = 0.45
