@@ -192,11 +192,11 @@ def acs_active_MAX(manager: Data_Manager):
             controller_servo.servo_stop(manager)
         time.sleep(SERVO_DELAY)
 
-    if (int(controller_servo.servo.throttle) != int(controller_servo.MAX_UP)) and (not max_hit):
-        controller_servo.servo_up(manager)
-    elif max_hit:
+    if max_hit:
         if int(controller_servo.servo.throttle) != int(controller_servo.STOP):
             controller_servo.servo_stop(manager)
+    elif (int(controller_servo.servo.throttle) != int(controller_servo.MAX_UP)) and (not max_hit):
+        controller_servo.servo_up(manager)
     else:
         pass
      
