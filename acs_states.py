@@ -25,6 +25,7 @@ acs_states = [
 acs_state = ''
 acs_timer_start = None
 sw_timer_start = None
+max_hit = False
 
 # ACS Functions
 def init_acs_state(manager: Data_Manager) -> bool:
@@ -171,7 +172,7 @@ def acs_active_MAX(manager: Data_Manager):
     #    controller_servo.servo_throttle(controller_servo.STOP, manager)
     #else:
     #    manager.update_field('servo_Throttle', controller_servo.servo.throttle)
-    max_hit = False
+    global max_hit
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
         if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
             controller_servo.servo_up(manager)
