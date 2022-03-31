@@ -46,7 +46,7 @@ def get_dtheta(manager: Data_Manager):
     t = float(manager.read_field('Time').get_value())
     dt = get_dt(t)
     dtheta = omega*dt
-    print(f"omega: {omega}, dt: {dt}, dtheta: {dtheta}")
+    # print(f"omega: {omega}, dt: {dt}, dtheta: {dtheta}")
     #theta = theta_prev + dtheta
     #theta_prev = theta
     return dtheta
@@ -60,7 +60,7 @@ def get_alpha(manager: Data_Manager):#dalpha/dt
     alpha = alpha_prev + dalpha # [rad]
     alpha_prev = alpha
     manager.update_field('Alpha', alpha)
-    print(f"dalpha: {dalpha}")
+    # print(f"dalpha: {dalpha}")
     return alpha
 
 def servo_control(manager: Data_Manager):
