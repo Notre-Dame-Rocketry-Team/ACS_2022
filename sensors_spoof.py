@@ -115,7 +115,8 @@ def init_kalman_velocity(manager: Data_Manager, rows) -> bool:
 
 def read_kalman_velocity(manager: Data_Manager):
     global kalman_velocity
-    vel = next(kalman_velocity)
+    vel = float(next(kalman_velocity))
+    print(vel)
     manager.update_field('Kalman_velocity', vel)
 
 def initialize_sensors(path: str, manager: Data_Manager) -> bool:
