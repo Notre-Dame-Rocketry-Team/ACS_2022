@@ -59,9 +59,13 @@ def initialize_filter(manager: Data_Manager):
     my_filter.x = np.array([0,0,0])
 
     # Initialize data manager
-    manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
-    manager.add_data(data_manager.Scalar_Data('Kalman_velocity'))
-    manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
+    if FAKE_DATA:
+        manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
+        manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
+    else:
+        manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
+        manager.add_data(data_manager.Scalar_Data('Kalman_velocity'))
+        manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
 
     
 def gen_phi(dt):
@@ -162,8 +166,12 @@ def filter_data(manager: Data_Manager):
 
     # Log the output
     y,v,a = my_filter.x
-    manager.update_field('Kalman_altitude', y)
-    manager.update_field('Kalman_velocity', v)
-    manager.update_field('Kalman_acceleration', a)
+    if FAKE_DATA:
+        manager.update_field('Kalman_altitude', y)
+        manager.update_field('Kalman_acceleration', a)
+    else:
+        manager.update_field('Kalman_altitude', y)
+        manager.update_field('Kalman_velocity', v)
+        manager.update_field('Kalman_acceleration', a)
 
     #print(f'Kalman: {a}')

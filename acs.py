@@ -15,7 +15,7 @@ fake_path = 'data_fullscale_20220301_01.csv'
 import time
 import traceback
 import data_filter
-# import controller_PID
+import controller_PID
 import scribe
 # import sensors
 import state
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # Initialize the ACS State (ACS_OnGround)
     acs_states.init_acs_state(manager)
     # Initialize the PID Control Algorithm
-    # controller_PID.initialize(manager)
+    controller_PID.initialize(manager)
     # Initialize CSV
     scribe.newCSV(file_p, manager.get_field_names()) # Write Headers
 
