@@ -10,7 +10,7 @@ acce = None
 altimeter = None
 icm = None
 times = None
-kalman_velocity = None
+# kalman_velocity = None
 
 read_row = lambda data, key: [row[key] for row in data]
 
@@ -28,7 +28,7 @@ ICM_GYRO_Z = 'ICM_gyroscope_z'
 ICM_MAGN_X = 'ICM_magnetometer_x'
 ICM_MAGN_Y = 'ICM_magnetometer_y'
 ICM_MAGN_Z = 'ICM_magnetometer_z'
-KALMAN_VELOCITY = 'Kalman_velocity'
+# KALMAN_VELOCITY = 'Kalman_velocity'
 
 def init_time(manager: Data_Manager, rows) -> bool:
     manager.add_data(data_manager.Scalar_Data('Time'))
