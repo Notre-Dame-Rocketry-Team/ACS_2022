@@ -10,7 +10,7 @@ acce = None
 altimeter = None
 icm = None
 times = None
-kalman_velocity = None
+# kalman_velocity = None
 
 read_row = lambda data, key: [row[key] for row in data]
 
@@ -28,7 +28,7 @@ ICM_GYRO_Z = 'ICM_gyroscope_z'
 ICM_MAGN_X = 'ICM_magnetometer_x'
 ICM_MAGN_Y = 'ICM_magnetometer_y'
 ICM_MAGN_Z = 'ICM_magnetometer_z'
-KALMAN_VELOCITY = 'Kalman_velocity'
+# KALMAN_VELOCITY = 'Kalman_velocity'
 
 def init_time(manager: Data_Manager, rows) -> bool:
     manager.add_data(data_manager.Scalar_Data('Time'))
@@ -105,7 +105,7 @@ def read_altimeter(manager: Data_Manager):
         altitude = 0
     manager.update_field('BMP_altitude', altitude)
     # print(f"Altitude: {altitude}")
-
+"""
 def init_kalman_velocity(manager: Data_Manager, rows) -> bool:
     global kalman_velocity
 
@@ -117,7 +117,7 @@ def read_kalman_velocity(manager: Data_Manager):
     global kalman_velocity
     vel = float(next(kalman_velocity))
     manager.update_field('Kalman_velocity', vel)
-
+"""
 def initialize_sensors(path: str, manager: Data_Manager) -> bool:
     with open(path, newline='') as f:
         reader = csv.DictReader(f)
@@ -130,7 +130,7 @@ def initialize_sensors(path: str, manager: Data_Manager) -> bool:
             result = result and init_accelerometer(manager, rows)
         elif sensor == 'Altimeter':
             result = result and init_altimeter(manager, rows)
-    result = result and init_kalman_velocity(manager, rows)
+    # result = result and init_kalman_velocity(manager, rows)
     
     return result
 
@@ -149,5 +149,5 @@ def read_sensors(manager: Data_Manager):
             read_accelerometer(manager)
         elif sensor == 'Altimeter':
             read_altimeter(manager)
-    read_kalman_velocity(manager)
+    # read_kalman_velocity(manager)
 
