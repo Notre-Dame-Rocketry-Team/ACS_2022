@@ -59,13 +59,9 @@ def initialize_filter(manager: Data_Manager):
     my_filter.x = np.array([0,0,0])
 
     # Initialize data manager
-    if FAKE_DATA:
-        manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
-        manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
-    else:
-        manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
-        manager.add_data(data_manager.Scalar_Data('Kalman_velocity'))
-        manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_altitude'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_velocity'))
+    manager.add_data(data_manager.Scalar_Data('Kalman_acceleration'))
 
     
 def gen_phi(dt):
@@ -106,9 +102,9 @@ def transform_LIS(in_accel):
 def transform_ICM(in_accel):
     #out_accel = g*(float(in_accel[2]))-0.53
     if FAKE_DATA:
-        out_accel = (float(in_accel[0])) -9.795813967536112
+        out_accel = (float(in_accel[0])) - 9.795813967536112
     else:
-        out_accel = (float(in_accel[0]))-9.795813967536112
+        out_accel = (float(in_accel[0])) - 9.795813967536112
     #print(f'MPU: {in_accel[2]}, {out_accel}')
     return out_accel
 
@@ -166,12 +162,8 @@ def filter_data(manager: Data_Manager):
 
     # Log the output
     y,v,a = my_filter.x
-    if FAKE_DATA:
-        manager.update_field('Kalman_altitude', y)
-        manager.update_field('Kalman_acceleration', a)
-    else:
-        manager.update_field('Kalman_altitude', y)
-        manager.update_field('Kalman_velocity', v)
-        manager.update_field('Kalman_acceleration', a)
+    manager.update_field('Kalman_altitude', y)
+    manager.update_field('Kalman_velocity', v)
+    manager.update_field('Kalman_acceleration', a)
 
     #print(f'Kalman: {a}')
