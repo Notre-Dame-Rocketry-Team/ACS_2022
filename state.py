@@ -69,7 +69,9 @@ def state_transition(manager: Data_Manager):
     # Apogee state => OnGround state # (after remaining in Apogee state for CYCLE_DELAY seconds)
     elif (state == states[-1]):
         next_state = state[0]
-        acs_states.init_acs_state(manager)
+    with open('SUCCESS.txt','w') as success_log:
+        success_log.write(f"SUCCESS! Apogee ({altitude}m = {altitude*3.28084}ft) reached. Retracting flaps now... see you on the ground in a bit :)")
+    acs_states.init_acs_state(manager)
         
     else:
     # If no condition is met, remain in the current state (so we can loop and try again)
