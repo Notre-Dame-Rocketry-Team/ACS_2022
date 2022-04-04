@@ -23,8 +23,8 @@ acs_states = [
     'ACS_Failure'
 ]
 acs_state = ''
-acs_timer_start = None
-sw_timer_start = None
+# acs_timer_start = None
+# sw_timer_start = None
 max_hit = False
 
 # ACS Functions
@@ -35,9 +35,9 @@ def init_acs_state(manager: Data_Manager) -> bool:
     controller_servo.init_controller()
     controller_servo.init_servo(manager)
     controller_servo.servo_stop(manager)
-    global acs_timer_start
-    global acs_state
-    acs_timer_start = None
+    # global acs_timer_start
+    # global acs_state
+    # acs_timer_start = None
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
     # Initialize the flap position so that flaps are fully retracted
@@ -117,9 +117,9 @@ def acs_active(manager: Data_Manager):
     This function actuates the servo.
     '''
     # Call PID_control functions here as required
-    global acs_timer_start
+    # global acs_timer_start
     global acs_state
-    global sw_timer_start
+    # global sw_timer_start
     while controller_servo.gpio.input(LOWER_LIMIT_SWITCH_PIN) == 1:
         if int(controller_servo.servo.throttle) != controller_servo.MAX_UP:
             controller_servo.servo_up(manager)
