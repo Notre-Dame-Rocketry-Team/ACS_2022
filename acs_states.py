@@ -36,8 +36,8 @@ def init_acs_state(manager: Data_Manager) -> bool:
     controller_servo.init_servo(manager)
     controller_servo.servo_stop(manager)
     # global acs_timer_start
-    # global acs_state
     # acs_timer_start = None
+    global acs_state
     # Add ACS_state to manager for logging purposes
     manager.add_data(data_manager.Scalar_Data('ACS_state'))
     # Initialize the flap position so that flaps are fully retracted
