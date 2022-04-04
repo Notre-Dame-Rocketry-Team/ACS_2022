@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "acs.py", line 73, in <module>
-    sensors.read_sensors(manager)
-  File "/home/pi/ACS_2022/sensors_spoof.py", line 129, in read_sensors
-    read_time(manager)
-  File "/home/pi/ACS_2022/sensors_spoof.py", line 40, in read_time
-    current_time = next(times)
-StopIteration
