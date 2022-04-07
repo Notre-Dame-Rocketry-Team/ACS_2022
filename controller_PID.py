@@ -10,6 +10,7 @@ PID Control Algorithm v1
 import numpy as np
 import matplotlib.pyplot as plt
 import data_manager
+import data_filter
 from data_manager import Data_Manager
 
 # Constants
@@ -44,7 +45,7 @@ def get_dtheta(manager: Data_Manager):
     K = K * (2*np.pi) # rad/sec
     omega = K * (-(float(manager.read_field('servo_Throttle').get_value())) + 0.15)
     t = float(manager.read_field('Time').get_value())
-    dt = get_dt(t)
+    dt = data_filter.get_dt(t)
     dtheta = omega*dt
     # print(f"omega: {omega}, dt: {dt}, dtheta: {dtheta}")
     #theta = theta_prev + dtheta
