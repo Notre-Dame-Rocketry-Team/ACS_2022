@@ -21,7 +21,7 @@ MAX_DOWN = 1
 # Global Variables
 alpha_prev = 0
 # theta_prev = 0
-t_prev = None
+t_prev_PID = None
 target_throttle = STOP
 # Functions
 def initialize(manager: Data_Manager):
@@ -31,12 +31,12 @@ def initialize(manager: Data_Manager):
     manager.add_data(data_manager.Scalar_Data('target_Throttle'))
 
 def get_dt(in_time):
-    global t_prev
-    if t_prev == None:
+    global t_prev_PID
+    if t_prev_PID == None:
         dt = 0.1
     else:
-        dt = in_time - t_prev
-    t_prev = in_time
+        dt = in_time - t_prev_PID
+    t_prev_PID = in_time
     return dt
 
 def get_dtheta(manager: Data_Manager):
@@ -45,7 +45,7 @@ def get_dtheta(manager: Data_Manager):
     K = K * (2*np.pi) # rad/sec
     omega = K * (-(float(manager.read_field('servo_Throttle').get_value())) + 0.15)
     t = float(manager.read_field('Time').get_value())
-    dt = data_filter.get_dt(t)
+    dt = get_dt(t)
     dtheta = omega*dt
     # print(f"omega: {omega}, dt: {dt}, dtheta: {dtheta}")
     #theta = theta_prev + dtheta
@@ -65,8 +65,6 @@ def get_alpha(manager: Data_Manager):#dalpha/dt
     return alpha
 
 def servo_control(manager: Data_Manager):
-    t = float(manager.read_field('Time').get_value())
-    dt = get_dt(t)
     height = manager.read_field('Kalman_altitude').get_value()
     velocity = manager.read_field('Kalman_velocity').get_value()
     throttle = manager.read_field('servo_Throttle').get_value()
