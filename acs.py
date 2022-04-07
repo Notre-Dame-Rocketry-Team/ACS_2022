@@ -8,7 +8,7 @@ With contributions from Patrick Faley and Hector Juarez
 """
 
 FAKE_DATA = False
-FAKE_DATA_SAMPLE_RATE = 10 #Hz
+FAKE_DATA_SAMPLE_RATE = 15 #Hz
 fake_path = 'data_fullscale_20220403_01.csv'
 
 # Import libraries
