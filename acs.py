@@ -66,30 +66,30 @@ if __name__ == '__main__':
 
     while True:
         try:
-            print('--- Beginning Cycle ---')
+            # print('--- Beginning Cycle ---')
             # Read sensors (unfiltered)
-            t1 = time.time()
+            # t1 = time.time()
             # data = sensors.read_sensors(sensors)
             sensors.read_sensors(manager)
-            count += 1#
+            count += 1
             print(f"Cycle Count: {count}")
-            t2 = time.time()
-            print(f'Total Sensor Read Time: {t2 - t1}s')
+            # t2 = time.time()
+            # print(f'Total Sensor Read Time: {t2 - t1}s')
 
             # Filter data
-            t1 = time.time()
+            # t1 = time.time()
             data_filter.filter_data(manager)
-            t2 = time.time()
-            print(f'Total Data Filtering Time: {t2 - t1}s')
+            # t2 = time.time()
+            # print(f'Total Data Filtering Time: {t2 - t1}s')
 
             # Update Current Launch Vehicle State
-            t1 = time.time()
+            # t1 = time.time()
             current_state = state.state_transition(manager)
-            t2 = time.time()
-            print(f'Launch Vehicle State Update Time: {t2 - t1}s')
+            # t2 = time.time()
+            # print(f'Launch Vehicle State Update Time: {t2 - t1}s')
 
             # Update ACS State
-            t1 = time.time()
+            # t1 = time.time()
             if len(current_state_lst) < MAX_OLD_STATE:
                 current_state_lst.append(current_state)
             else:
@@ -114,14 +114,14 @@ if __name__ == '__main__':
 
             else:
                 manager.update_field('ACS_state',acs_states.acs_state)
-            t2 = time.time()
-            print(f'ACS State Update Time: {t2 - t1}s')
+            # t2 = time.time()
+            # print(f'ACS State Update Time: {t2 - t1}s')
 
             # Write/Log to CSV
-            t1 = time.time()
+            # t1 = time.time()
             scribe.addRow(file_p, manager.get_field_values())
-            t2 = time.time()
-            print(f'Data Write Time: {t2 - t1}s')
+            # t2 = time.time()
+            # print(f'Data Write Time: {t2 - t1}s')
             print()
             if FAKE_DATA:
                 time.sleep(1/FAKE_DATA_SAMPLE_RATE)
