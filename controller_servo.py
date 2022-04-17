@@ -17,7 +17,7 @@ gpio.setup(17, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 gpio.setup(27, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 
 # CONSTANTS
-CONTROLLER_PIN = 5
+CONTROLLER_PIN = 7
 STOP = 0.15 # Use this for servo.throttle() to stop the motor
 MAX_UP = -1
 MAX_DOWN = 1
