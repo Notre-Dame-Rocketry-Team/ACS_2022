@@ -24,7 +24,7 @@ LAUNCH_ACCEL = 50 # m/s^2
 LAUNCH_ALT = 50 # m
 BURNOUT_ACCEL = -6.125 # m/s^2
 # BURNOUT_ALT = 300 # m
-APOGEE_VELOCITY = -5.5 # m/s
+APOGEE_VELOCITY = -2 # m/s
 APOGEE_ALT = 1463 # m (4800ft)
 # CYCLE_DELAY = 300 # s (5 minutes) # Approx. how long will it take to reach the ground after apogee?
 
@@ -70,7 +70,7 @@ def state_transition(manager: Data_Manager):
     elif (state == states[-1]):
         next_state = state[0]
         with open('SUCCESS.txt','w') as success_log:
-            success_log.write(f"SUCCESS! Apogee ({altitude}m = {altitude*3.28084}ft) reached. Retracting flaps now... see you on the ground in a bit :)")
+            success_log.write(f"SUCCESS! Apogee ({altitude}m = {altitude*3.28084}ft) reached. Retracting flaps now... see you on the ground in a bit :)\n")
         acs_states.init_acs_state(manager)
         
     else:
