@@ -1,10 +1,11 @@
+## BEGINNING OF PROGRAM ##
 """
 This file contains the main code, which will
 continually read data from sensors, filter it, 
 and write output. It will also call functions to
 change the current vehicle state and acs state.
 Author: Daniel Noronha
-With contributions from Patrick Faley and Hector Juarez
+With contributions from Patrick Faley and Hector Juarez.
 """
 
 FAKE_DATA = False
@@ -138,3 +139,4 @@ if __name__ == '__main__':
                 time.sleep(0.5)
             break
 
+## END OF PROGRAM ##
